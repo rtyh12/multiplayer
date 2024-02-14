@@ -1,7 +1,6 @@
 extends Node2D
 
 
-var IP_ADDRESS := "localhost"
 var PORT = 3000
 var MAX_CLIENTS = 10
 
@@ -16,6 +15,8 @@ func _ready() -> void:
 	var peer = ENetMultiplayerPeer.new()
 	peer.create_server(PORT, MAX_CLIENTS)
 	multiplayer.multiplayer_peer = peer
+
+	print("server up")
 
 	multiplayer.peer_connected.connect(peer_connected.bind())
 	
