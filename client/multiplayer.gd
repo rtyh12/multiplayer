@@ -1,7 +1,8 @@
 extends Node2D
 
 
-var IP_ADDRESS := "localhost"
+# var IP_ADDRESS := "fairydust.cc"
+var IP_ADDRESS := "159.89.20.135"
 var PORT = 3000
 
 

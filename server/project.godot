@@ -15,6 +15,10 @@ run/main_scene="res://main_server.tscn"
 config/features=PackedStringArray("4.2", "Forward Plus")
 config/icon="res://icon.svg"
 
+[autoload]
+
+MultiplayerSetup="*res://SetupMultiplayer.gd"
+
 [input]
 
 click={
