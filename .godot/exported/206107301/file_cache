@@ -1,0 +1,7 @@
+res://icon.svg::43b305bd3d55f8faec5e5175cbe35533fd08052470d0201bba4bea9c2e1187c7::1707939907::res://.godot/exported/206107301/export-218a8f2b3041327d8a5756f3a245f83b-icon.res
+res://main_server.tscn::e7262cdd180fb6f6a763d2cc08bd6bdd::1708597965::res://.godot/exported/206107301/export-9f509a86e3b1d629710e371c59721211-main_server.scn
+res://multiplayer.gd::c95c9744b10da28a9f3e5e65184b1c80::1707947831::
+res://ClickRobot.gd::2168f3b3e281ca0e6fd8f860fe8c79fd::1708276062::
+res://SpawnRobots.gd::5cb5bb47c4840ead1205bdfe99ada179::1708598025::
+res://robot.tscn::79c8f80d0c6ddec22b395b0c3de609bf::1708597965::res://.godot/exported/206107301/export-a8a6c2d17c22928b6c4c68c746089ba7-robot.scn
+res://SetupMultiplayer.gd::6348c28ab0bc7cd019d5fce704ae03c9::1708597937::

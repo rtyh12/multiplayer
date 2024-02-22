@@ -1,0 +1,10 @@
+ea4bc82a6ad023ab7ee23ee620429895
+::res://::1708597965
+ClickRobot.gd::GDScript::-1::1708276062::0::1::::<>TextureRect<>::
+export_presets.cfg::TextFile::-1::1708596505::0::1::::<><>::
+icon.svg::CompressedTexture2D::1189428381663121937::1707939907::1707939913::1::::<><>::
+main_server.tscn::PackedScene::1356988857366246306::1708597965::0::1::::<><>::uid://ck3c0gyk7dbau::::res://robot.tscn<>res://SpawnRobots.gd
+multiplayer.gd::GDScript::-1::1707947831::0::1::::<>Node2D<>::
+robot.tscn::PackedScene::5532698812425997936::1708597965::0::1::::<><>::uid://q7fygxoaljav::::res://icon.svg<>res://ClickRobot.gd
+SetupMultiplayer.gd::GDScript::-1::1708597937::0::1::::<>Node<>::
+SpawnRobots.gd::GDScript::-1::1708598025::0::1::::<>GridContainer<>::
