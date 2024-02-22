@@ -8,8 +8,7 @@ var IP_ADDRESS := "172.22.226.71"
 var PORT := 3000
 
 func _ready() -> void:
-	print(OS.has_feature("headless"))
-	if OS.has_feature("dedicated_server") or OS.has_feature("Server"):
+	if OS.get_cmdline_args().has("server"):
 		peer.create_server(PORT)
 		print("server")
 	else:
