@@ -3,8 +3,8 @@ extends Node
 
 var peer := ENetMultiplayerPeer.new()
 
-# var IP_ADDRESS := "fairydust.cc"
-var IP_ADDRESS := "172.22.226.71"
+var IP_ADDRESS := "fairydust.cc"
+# var IP_ADDRESS := "172.22.226.71"
 var PORT := 3000
 
 func _ready() -> void:
