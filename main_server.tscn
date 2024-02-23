@@ -1,27 +1,17 @@
 [gd_scene load_steps=3 format=3 uid="uid://tlln451d4thq"]
 
-[ext_resource type="PackedScene" uid="uid://ck3c0gyk7dbau" path="res://robot.tscn" id="1_2uhel"]
-[ext_resource type="Script" path="res://SpawnRobots.gd" id="1_q4xqa"]
+[ext_resource type="Script" path="res://SetupMultiplayer.gd" id="1_xiowd"]
+[ext_resource type="PackedScene" uid="uid://ck3c0gyk7dbau" path="res://robot.tscn" id="2_n8nhr"]
 
-[node name="Control" type="Control"]
-layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
+[node name="Node2D" type="Node2D"]
 
-[node name="GridContainer" type="GridContainer" parent="."]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-columns = 6
-script = ExtResource("1_q4xqa")
-robot = ExtResource("1_2uhel")
+[node name="World" type="Node2D" parent="."]
 
 [node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="."]
 _spawnable_scenes = PackedStringArray("res://robot.tscn")
-spawn_path = NodePath("../GridContainer")
+spawn_path = NodePath("../World")
+
+[node name="SetupMultiplayer" type="Node2D" parent="." node_paths=PackedStringArray("spawn_path")]
+script = ExtResource("1_xiowd")
+spawn_path = NodePath("../World")
+robot_scene = ExtResource("2_n8nhr")
