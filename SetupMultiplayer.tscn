@@ -1,0 +1,9 @@
+[gd_scene load_steps=3 format=3 uid="uid://ciektd48dx6yd"]
+
+[ext_resource type="Script" path="res://SetupMultiplayer.gd" id="1_adhuj"]
+[ext_resource type="PackedScene" uid="uid://ck3c0gyk7dbau" path="res://robot.tscn" id="2_dyxpn"]
+
+[node name="SetupMultiplayer" type="Node2D" node_paths=PackedStringArray("spawn_path")]
+script = ExtResource("1_adhuj")
+spawn_path = NodePath("")
+robot_scene = ExtResource("2_dyxpn")
