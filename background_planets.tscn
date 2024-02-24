@@ -1,0 +1,99 @@
+[gd_scene load_steps=17 format=3 uid="uid://bml5qqpix61sh"]
+
+[ext_resource type="Script" path="res://background_planets.gd" id="1_842y4"]
+[ext_resource type="Shader" path="res://shaders/planet.gdshader" id="2_typg0"]
+[ext_resource type="PackedScene" uid="uid://c36velgas3n3k" path="res://addons/zylann.atmosphere/planet_atmosphere.tscn" id="3_ca7ej"]
+[ext_resource type="Texture2D" uid="uid://cjk38py1dhtnt" path="res://textures/sun.png" id="4_i842e"]
+[ext_resource type="Texture2D" uid="uid://1bndtcse2ori" path="res://textures/panorama_image.png" id="5_2vvpc"]
+
+[sub_resource type="Gradient" id="Gradient_kgq8a"]
+offsets = PackedFloat32Array(0.539548, 0.548023, 0.601695, 0.737288, 0.858757, 1)
+colors = PackedColorArray(0.0475701, 0.2148, 0.373866, 1, 0.863369, 0.547163, 0.145621, 1, 0.881481, 0.545328, 0.323687, 1, 0.461485, 0.403319, 0.161216, 1, 0.284118, 0.351727, 0.193219, 1, 0.639036, 0.501483, 0.208203, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_70e4a"]
+gradient = SubResource("Gradient_kgq8a")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_2nyrw"]
+render_priority = 0
+shader = ExtResource("2_typg0")
+shader_parameter/random_seed = 1
+shader_parameter/scale = 35.0
+shader_parameter/colormap = SubResource("GradientTexture1D_70e4a")
+
+[sub_resource type="SphereMesh" id="SphereMesh_57hc0"]
+material = SubResource("ShaderMaterial_2nyrw")
+radius = 1.0
+height = 2.0
+radial_segments = 289
+rings = 502
+
+[sub_resource type="Gradient" id="Gradient_kk4cn"]
+offsets = PackedFloat32Array(0.0621469, 0.596045, 0.745763, 0.903955)
+colors = PackedColorArray(0.0434085, 0.0398451, 0.0143124, 1, 0.588245, 0.506117, 0.449177, 1, 0.501514, 0.305875, 0.0469037, 1, 0.269743, 0.0994845, 0.0717673, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_8m25v"]
+gradient = SubResource("Gradient_kk4cn")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_qjgg5"]
+render_priority = 0
+shader = ExtResource("2_typg0")
+shader_parameter/random_seed = 1433
+shader_parameter/scale = 5.88
+shader_parameter/colormap = SubResource("GradientTexture1D_8m25v")
+
+[sub_resource type="SphereMesh" id="SphereMesh_3gos8"]
+material = SubResource("ShaderMaterial_qjgg5")
+radius = 0.8
+height = 1.6
+
+[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_xjp8d"]
+panorama = ExtResource("5_2vvpc")
+
+[sub_resource type="Sky" id="Sky_bfujx"]
+sky_material = SubResource("PanoramaSkyMaterial_xjp8d")
+
+[sub_resource type="Environment" id="Environment_oqjs0"]
+background_mode = 2
+sky = SubResource("Sky_bfujx")
+tonemap_mode = 3
+
+[node name="Node3D" type="Node3D" node_paths=PackedStringArray("camera", "sun")]
+script = ExtResource("1_842y4")
+camera = NodePath("Camera3D")
+sun = NodePath("OmniLight3D")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.649326, -0.277404)
+mesh = SubResource("SphereMesh_57hc0")
+
+[node name="PlanetAthmosphere" parent="MeshInstance3D" instance=ExtResource("3_ca7ej")]
+atmosphere_height = 0.04
+sun_path = NodePath("../../OmniLight3D")
+shader_params/u_density = 6.75
+shader_params/u_scattering_strength = 0.555
+shader_params/u_scattering_wavelengths = Vector3(700, 530, 453.57)
+shader_params/u_atmosphere_ambient_color = Color(0, 0, 0.002, 1)
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.30769, 1.88373, -0.583013)
+mesh = SubResource("SphereMesh_3gos8")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.339992, 0.644719, 0.913727)
+fov = 60.0
+near = 0.001
+
+[node name="OmniLight3D" type="OmniLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14.3273, 13.5311, 1.00247)
+light_energy = 54.0
+light_size = 6.0
+shadow_enabled = true
+omni_range = 4096.0
+
+[node name="Sprite3D" type="Sprite3D" parent="OmniLight3D"]
+pixel_size = 0.05
+billboard = 1
+texture = ExtResource("4_i842e")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_oqjs0")

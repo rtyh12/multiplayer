@@ -1,0 +1,56 @@
+[gd_scene load_steps=5 format=3 uid="uid://cp06pey67226l"]
+
+[ext_resource type="PackedScene" uid="uid://bml5qqpix61sh" path="res://background_planets.tscn" id="1_o4clo"]
+[ext_resource type="PackedScene" uid="uid://dc1g5116c7psp" path="res://near_world.tscn" id="1_ukkoh"]
+[ext_resource type="Script" path="res://WindowController.gd" id="3_iidty"]
+
+[sub_resource type="World3D" id="World3D_ivr5p"]
+
+[node name="Main" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="SubViewportContainer2" type="SubViewportContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+stretch = true
+
+[node name="SubViewport" type="SubViewport" parent="SubViewportContainer2"]
+own_world_3d = true
+world_3d = SubResource("World3D_ivr5p")
+handle_input_locally = false
+screen_space_aa = 1
+size = Vector2i(1152, 648)
+render_target_update_mode = 4
+
+[node name="background_planets" parent="SubViewportContainer2/SubViewport" instance=ExtResource("1_o4clo")]
+
+[node name="SubViewportContainer" type="SubViewportContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+stretch = true
+
+[node name="SubViewport" type="SubViewport" parent="SubViewportContainer"]
+transparent_bg = true
+handle_input_locally = false
+screen_space_aa = 1
+size = Vector2i(1152, 648)
+render_target_update_mode = 4
+
+[node name="near_world" parent="SubViewportContainer/SubViewport" node_paths=PackedStringArray("solar_system") instance=ExtResource("1_ukkoh")]
+solar_system = NodePath("../../../SubViewportContainer2/SubViewport/background_planets")
+
+[node name="Node" type="Node" parent="."]
+script = ExtResource("3_iidty")

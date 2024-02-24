@@ -4,6 +4,8 @@ extends GridContainer
 @export var robot: PackedScene
 
 func _ready() -> void:
+	print("SPAWN ROBOTS!!!!")
+	
 	if not OS.get_cmdline_args().has("server"):
 		return
 
