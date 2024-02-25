@@ -10,8 +10,8 @@ extends Node
 var peer := ENetMultiplayerPeer.new()
 var is_server := OS.get_cmdline_args().has("server")
 
-# var IP_ADDRESS := "fairydust.cc"
-var IP_ADDRESS := "172.22.226.71"
+var IP_ADDRESS := "fairydust.cc"
+# var IP_ADDRESS := "172.22.226.71"
 var PORT := 3000
 
 var s_clients = {}

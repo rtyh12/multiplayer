@@ -1,14 +1,16 @@
-[gd_scene load_steps=17 format=3 uid="uid://bml5qqpix61sh"]
+[gd_scene load_steps=21 format=3 uid="uid://bml5qqpix61sh"]
 
 [ext_resource type="Script" path="res://background_planets.gd" id="1_842y4"]
 [ext_resource type="Shader" path="res://shaders/planet.gdshader" id="2_typg0"]
+[ext_resource type="Script" path="res://CelestialBody.gd" id="3_3fws1"]
 [ext_resource type="PackedScene" uid="uid://c36velgas3n3k" path="res://addons/zylann.atmosphere/planet_atmosphere.tscn" id="3_ca7ej"]
 [ext_resource type="Texture2D" uid="uid://cjk38py1dhtnt" path="res://textures/sun.png" id="4_i842e"]
 [ext_resource type="Texture2D" uid="uid://1bndtcse2ori" path="res://textures/panorama_image.png" id="5_2vvpc"]
 
 [sub_resource type="Gradient" id="Gradient_kgq8a"]
-offsets = PackedFloat32Array(0.539548, 0.548023, 0.601695, 0.737288, 0.858757, 1)
-colors = PackedColorArray(0.0475701, 0.2148, 0.373866, 1, 0.863369, 0.547163, 0.145621, 1, 0.881481, 0.545328, 0.323687, 1, 0.461485, 0.403319, 0.161216, 1, 0.284118, 0.351727, 0.193219, 1, 0.639036, 0.501483, 0.208203, 1)
+interpolation_mode = 1
+offsets = PackedFloat32Array(0, 0.627329, 0.65528, 0.729814, 0.81677, 0.923913, 0.962733)
+colors = PackedColorArray(0.0475701, 0.2148, 0.373866, 1, 0.863369, 0.547163, 0.145621, 1, 0.881481, 0.545328, 0.323687, 1, 0.461485, 0.403319, 0.161216, 1, 0.284118, 0.351727, 0.193219, 1, 0.639036, 0.501483, 0.208203, 1, 0.627354, 0.736691, 0.48792, 1)
 
 [sub_resource type="GradientTexture1D" id="GradientTexture1D_70e4a"]
 gradient = SubResource("Gradient_kgq8a")
@@ -22,13 +24,14 @@ shader_parameter/colormap = SubResource("GradientTexture1D_70e4a")
 
 [sub_resource type="SphereMesh" id="SphereMesh_57hc0"]
 material = SubResource("ShaderMaterial_2nyrw")
-radius = 1.0
-height = 2.0
+radius = 0.063
+height = 0.126
 radial_segments = 289
 rings = 502
 
 [sub_resource type="Gradient" id="Gradient_kk4cn"]
-offsets = PackedFloat32Array(0.0621469, 0.596045, 0.745763, 0.903955)
+interpolation_mode = 1
+offsets = PackedFloat32Array(0.0621469, 0.237578, 0.523292, 0.737578)
 colors = PackedColorArray(0.0434085, 0.0398451, 0.0143124, 1, 0.588245, 0.506117, 0.449177, 1, 0.501514, 0.305875, 0.0469037, 1, 0.269743, 0.0994845, 0.0717673, 1)
 
 [sub_resource type="GradientTexture1D" id="GradientTexture1D_8m25v"]
@@ -37,14 +40,22 @@ gradient = SubResource("Gradient_kk4cn")
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_qjgg5"]
 render_priority = 0
 shader = ExtResource("2_typg0")
-shader_parameter/random_seed = 1433
-shader_parameter/scale = 5.88
+shader_parameter/random_seed = 1313
+shader_parameter/scale = 65.725
 shader_parameter/colormap = SubResource("GradientTexture1D_8m25v")
 
 [sub_resource type="SphereMesh" id="SphereMesh_3gos8"]
 material = SubResource("ShaderMaterial_qjgg5")
-radius = 0.8
-height = 1.6
+radius = 0.04
+height = 0.08
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_byq2h"]
+shading_mode = 0
+
+[sub_resource type="SphereMesh" id="SphereMesh_osxt0"]
+material = SubResource("StandardMaterial3D_byq2h")
+radius = 6.9
+height = 13.8
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_xjp8d"]
 panorama = ExtResource("5_2vvpc")
@@ -56,44 +67,77 @@ sky_material = SubResource("PanoramaSkyMaterial_xjp8d")
 background_mode = 2
 sky = SubResource("Sky_bfujx")
 tonemap_mode = 3
+glow_intensity = 3.27
+glow_strength = 0.95
+glow_bloom = 0.29
+glow_hdr_scale = 1.53
+glow_hdr_luminance_cap = 147.09
+glow_map_strength = 0.64
+volumetric_fog_density = 1.1525
+volumetric_fog_emission = Color(0.956863, 0, 0.713726, 1)
+volumetric_fog_emission_energy = 18.15
+adjustment_brightness = 0.83
+adjustment_contrast = 0.96
+adjustment_saturation = 1.27
+
+[sub_resource type="CameraAttributesPractical" id="CameraAttributesPractical_hed05"]
+auto_exposure_enabled = true
+dof_blur_far_distance = 2.65
+dof_blur_far_transition = 193.56
+dof_blur_amount = 0.51
+auto_exposure_min_sensitivity = 91.85
+auto_exposure_max_sensitivity = 5031.0
 
 [node name="Node3D" type="Node3D" node_paths=PackedStringArray("camera", "sun")]
 script = ExtResource("1_842y4")
 camera = NodePath("Camera3D")
 sun = NodePath("OmniLight3D")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.649326, -0.277404)
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." node_paths=PackedStringArray("meshInstance", "atmosphere")]
 mesh = SubResource("SphereMesh_57hc0")
+script = ExtResource("3_3fws1")
+radius = 6300.0
+meshInstance = NodePath(".")
+atmosphere = NodePath("PlanetAthmosphere")
 
 [node name="PlanetAthmosphere" parent="MeshInstance3D" instance=ExtResource("3_ca7ej")]
-atmosphere_height = 0.04
+planet_radius = 0.063
+atmosphere_height = 0.002
 sun_path = NodePath("../../OmniLight3D")
-shader_params/u_density = 6.75
+shader_params/u_density = 50.45
 shader_params/u_scattering_strength = 0.555
 shader_params/u_scattering_wavelengths = Vector3(700, 530, 453.57)
 shader_params/u_atmosphere_ambient_color = Color(0, 0, 0.002, 1)
 
-[node name="MeshInstance3D2" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.30769, 1.88373, -0.583013)
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="." node_paths=PackedStringArray("meshInstance")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0651057, 0.0212392, 0.114057)
 mesh = SubResource("SphereMesh_3gos8")
+script = ExtResource("3_3fws1")
+radius = 4000.0
+meshInstance = NodePath(".")
 
 [node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.339992, 0.644719, 0.913727)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00543519, 0.00410342, 0.125038)
 fov = 60.0
 near = 0.001
+far = 20000.0
 
 [node name="OmniLight3D" type="OmniLight3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14.3273, 13.5311, 1.00247)
-light_energy = 54.0
-light_size = 6.0
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1480, 13.531, -5.759)
+light_energy = 10000.0
+light_size = 6.9
 shadow_enabled = true
-omni_range = 4096.0
+omni_range = 20000.0
 
 [node name="Sprite3D" type="Sprite3D" parent="OmniLight3D"]
-pixel_size = 0.05
+modulate = Color(50, 50, 50, 1)
+pixel_size = 2.7166
 billboard = 1
 texture = ExtResource("4_i842e")
 
+[node name="MeshInstance3D" type="MeshInstance3D" parent="OmniLight3D"]
+mesh = SubResource("SphereMesh_osxt0")
+
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_oqjs0")
+camera_attributes = SubResource("CameraAttributesPractical_hed05")
