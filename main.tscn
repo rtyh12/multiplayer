@@ -1,10 +1,29 @@
-[gd_scene load_steps=5 format=3 uid="uid://cp06pey67226l"]
+[gd_scene load_steps=12 format=3 uid="uid://cp06pey67226l"]
 
 [ext_resource type="PackedScene" uid="uid://bml5qqpix61sh" path="res://background_planets.tscn" id="1_o4clo"]
 [ext_resource type="PackedScene" uid="uid://dc1g5116c7psp" path="res://near_world.tscn" id="1_ukkoh"]
 [ext_resource type="Script" path="res://WindowController.gd" id="3_iidty"]
+[ext_resource type="Shader" path="res://shaders/postprocessing/dither2.gdshader" id="3_vropu"]
+[ext_resource type="Shader" path="res://shaders/postprocessing/palette.gdshader" id="3_w61aa"]
+[ext_resource type="Texture2D" uid="uid://te8abwv4hu3e" path="res://textures/dither/palette_eeve.png" id="4_rvelf"]
+[ext_resource type="Texture2D" uid="uid://cvd6hj6n0lyc6" path="res://textures/palettes/moondrom-1x.png" id="4_ub8j3"]
+[ext_resource type="Texture2D" uid="uid://c3xfnen0tpwu7" path="res://textures/dither/bayer8tile4.png" id="5_iquub"]
 
 [sub_resource type="World3D" id="World3D_ivr5p"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_52nm1"]
+shader = ExtResource("3_vropu")
+shader_parameter/u_bit_depth = 8
+shader_parameter/u_contrast = null
+shader_parameter/u_offset = null
+shader_parameter/u_dither_size = 2
+shader_parameter/u_dither_tex = ExtResource("5_iquub")
+shader_parameter/u_color_tex = ExtResource("4_rvelf")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_8phhi"]
+shader = ExtResource("3_w61aa")
+shader_parameter/colors = 15
+shader_parameter/palette = ExtResource("4_ub8j3")
 
 [node name="Main" type="Control"]
 layout_mode = 3
@@ -52,5 +71,28 @@ render_target_update_mode = 4
 [node name="near_world" parent="SubViewportContainer/SubViewport" node_paths=PackedStringArray("solar_system") instance=ExtResource("1_ukkoh")]
 solar_system = NodePath("../../../SubViewportContainer2/SubViewport/background_planets")
 
-[node name="Node" type="Node" parent="."]
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+visible = false
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer"]
+material = SubResource("ShaderMaterial_52nm1")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="CanvasLayer2" type="CanvasLayer" parent="."]
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer2"]
+material = SubResource("ShaderMaterial_8phhi")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="WindowController" type="Node" parent="."]
 script = ExtResource("3_iidty")
