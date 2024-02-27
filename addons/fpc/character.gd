@@ -20,6 +20,7 @@ extends CharacterBody3D
 @export var JUMP_ANIMATION : AnimationPlayer
 @export var CROUCH_ANIMATION : AnimationPlayer
 @export var COLLISION_MESH : CollisionShape3D
+@export var FLASHLIGHT : Light3D
 
 @export_group("Controls")
 @export var JUMP : String = "ui_accept"
@@ -27,7 +28,8 @@ extends CharacterBody3D
 @export var RIGHT : String = "move_right"
 @export var FORWARD : String = "move_up"
 @export var BACKWARD : String = "move_down"
-@export var PAUSE : String = "ui_cancel"
+# @export var PAUSE : String = "ui_cancel"
+@export var TOGGLE_FLASHLIGHT : String = "toggle_flashlight"
 @export var CROUCH : String
 @export var SPRINT : String
 
@@ -121,6 +123,9 @@ func _physics_process(delta):
 			JUMP_ANIMATION.play("land")
 		
 		was_on_floor = is_on_floor() # This must always be at the end of physics_process
+
+	if Input.is_action_just_pressed(TOGGLE_FLASHLIGHT):
+		FLASHLIGHT.visible = not FLASHLIGHT.visible
 
 
 func handle_jumping():
@@ -260,11 +265,11 @@ func _process(delta):
 		status += " in the air"
 	$UserInterface/DebugPanel.add_property("State", status, 4)
 	
-	if Input.is_action_just_pressed(PAUSE):
-		if Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
-			Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
-		elif Input.mouse_mode == Input.MOUSE_MODE_VISIBLE:
-			Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+	# if Input.is_action_just_pressed(PAUSE):
+	# 	if Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
+	# 		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+	# 	elif Input.mouse_mode == Input.MOUSE_MODE_VISIBLE:
+	# 		Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 	
 	HEAD.rotation.x = clamp(HEAD.rotation.x, deg_to_rad(-90), deg_to_rad(90))
 	

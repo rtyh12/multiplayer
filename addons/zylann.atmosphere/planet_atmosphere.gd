@@ -33,12 +33,12 @@ var _atmosphere_height := 0.1
 		set_atmosphere_height(value)
 
 
-var _sun_path : NodePath
-@export var sun_path : NodePath:
+var _sun : Node3D
+@export var sun : Node3D:
 	get:
-		return _sun_path
+		return _sun
 	set(value):
-		set_sun_path(value)
+		set_sun(value)
 
 
 var _custom_shader : Shader
@@ -219,9 +219,9 @@ func _set(p_key: StringName, value):
 
 
 func _get_configuration_warnings() -> PackedStringArray:
-	if _sun_path == null or _sun_path.is_empty():
+	if _sun == null:
 		return PackedStringArray(["The path to the sun is not assigned."])
-	var light = get_node(_sun_path)
+	var light = _sun
 	if not (light is Node3D):
 		return PackedStringArray(["The assigned sun node is not a Node3D."])
 	return PackedStringArray()
@@ -253,8 +253,8 @@ func set_atmosphere_height(new_height: float):
 		_request_bake_optical_depth()
 
 
-func set_sun_path(new_sun_path: NodePath):
-	_sun_path = new_sun_path
+func set_sun(new_sun: Node3D):
+	_sun = new_sun
 	update_configuration_warnings()
 
 
@@ -325,10 +325,8 @@ func _process(_delta):
 	# Lazily avoiding the node referencing can of worms.
 	# Not very efficient but I assume there won't be many atmospheres in the game.
 	# In Godot 4 it could be replaced by caching the object ID in some way
-	if has_node(_sun_path):
-		var sun = get_node(_sun_path)
-		if sun is Node3D:
-			mat.set_shader_parameter(&"u_sun_position", sun.global_transform.origin)
+	if _sun != null and _sun is Node3D:
+		mat.set_shader_parameter(&"u_sun_position", _sun.global_transform.origin)
 	
 	# We need this for mapping stuff around the planet.
 	# TODO Ideally we need view_to_model, which is better to avoid conversions with large numbers.

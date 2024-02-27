@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://bml5qqpix61sh"]
+[gd_scene load_steps=18 format=3 uid="uid://bml5qqpix61sh"]
 
 [ext_resource type="Script" path="res://background_planets.gd" id="1_842y4"]
 [ext_resource type="Shader" path="res://shaders/planet.gdshader" id="2_typg0"]
@@ -24,8 +24,11 @@ shader_parameter/colormap = SubResource("GradientTexture1D_8m25v")
 
 [sub_resource type="SphereMesh" id="SphereMesh_3gos8"]
 material = SubResource("ShaderMaterial_qjgg5")
-radius = 0.04
-height = 0.08
+radius = 0.04001
+height = 0.08002
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_yutd2"]
+radius = 0.04001
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_byq2h"]
 shading_mode = 0
@@ -43,6 +46,7 @@ sky_material = SubResource("PanoramaSkyMaterial_xjp8d")
 
 [sub_resource type="Environment" id="Environment_oqjs0"]
 background_mode = 2
+background_energy_multiplier = 6.42
 sky = SubResource("Sky_bfujx")
 tonemap_mode = 3
 glow_intensity = 3.27
@@ -65,19 +69,27 @@ dof_blur_amount = 0.51
 auto_exposure_min_sensitivity = 91.85
 auto_exposure_max_sensitivity = 5031.0
 
-[node name="Node3D" type="Node3D" node_paths=PackedStringArray("camera", "sun")]
+[node name="Node3D" type="Node3D" node_paths=PackedStringArray("camera", "sun", "sun_sprite")]
 script = ExtResource("1_842y4")
 camera = NodePath("Camera3D")
-sun = NodePath("OmniLight3D")
+sun = NodePath("Sun/DirectionalLight3D")
+sun_sprite = NodePath("Sun/Sprite3D")
 
-[node name="MeshInstance3D" parent="." instance=ExtResource("2_vf1lf")]
+[node name="MeshInstance3D" parent="." node_paths=PackedStringArray("sun") instance=ExtResource("2_vf1lf")]
+sun = NodePath("../Sun/Sprite3D")
 
-[node name="MeshInstance3D2" type="MeshInstance3D" parent="." node_paths=PackedStringArray("meshInstance")]
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="." node_paths=PackedStringArray("meshInstance", "collisionShape")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0651057, 0.0212392, 0.114057)
 mesh = SubResource("SphereMesh_3gos8")
 script = ExtResource("3_3fws1")
-radius = 4000.0
+radius = 4001.0
 meshInstance = NodePath(".")
+collisionShape = NodePath("StaticBody3D/CollisionShape3D")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="MeshInstance3D2"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D2/StaticBody3D"]
+shape = SubResource("SphereShape3D_yutd2")
 
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.005, 0.004, 0.115)
@@ -87,12 +99,13 @@ far = 20000.0
 
 [node name="OmniLight3D" type="OmniLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1480, 13.531, -5.759)
-light_energy = 10000.0
+visible = false
+light_energy = 2000.0
 light_size = 6.9
 shadow_enabled = true
 omni_range = 20000.0
 
-[node name="Sprite3D" type="Sprite3D" parent="OmniLight3D"]
+[node name="Sprite3D2" type="Sprite3D" parent="OmniLight3D"]
 modulate = Color(50, 50, 50, 1)
 pixel_size = 2.7166
 billboard = 1
@@ -104,3 +117,15 @@ mesh = SubResource("SphereMesh_osxt0")
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_oqjs0")
 camera_attributes = SubResource("CameraAttributesPractical_hed05")
+
+[node name="Sun" type="Node3D" parent="."]
+transform = Transform3D(0.533555, -0.784044, 0.317167, 0.81171, 0.580043, 0.0683791, -0.237583, 0.220964, 0.945901, 0, 0, 0)
+
+[node name="Sprite3D" type="Sprite3D" parent="Sun"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1001.59)
+modulate = Color(50, 50, 50, 1)
+pixel_size = 2.7166
+billboard = 1
+texture = ExtResource("4_i842e")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="Sun"]
