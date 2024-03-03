@@ -41,7 +41,9 @@ func peer_connected(id: int):
 func peer_disconnected(id: int):
 	s_clients.erase(id)
 	var player_path = "player_" + str(id)
-	spawn_path.get_node(player_path).queue_free()
+	var player = spawn_path.get_node(player_path)
+	if player != null:
+		player.queue_free()
 
 
 @rpc("any_peer")

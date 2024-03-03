@@ -9,6 +9,7 @@ func toggle_fullscreen():
 
 func _ready():
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+	# toggle_fullscreen()
 
 func _input(event):
 	if event.is_action_pressed("ui_cancel"):

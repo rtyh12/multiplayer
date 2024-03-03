@@ -298,7 +298,7 @@ fov = 151.2
 libraries = {
 "": SubResource("AnimationLibrary_o0unb")
 }
-blend_times = [&"RESET", &"RESET", 0.5, &"RESET", &"headbob", 0.5, &"headbob", &"RESET", 0.5]
+blend_times = [&"headbob", &"RESET", 0.5, &"RESET", &"headbob", 0.5, &"RESET", &"RESET", 0.5]
 
 [node name="JumpAnimation" type="AnimationPlayer" parent="Head"]
 libraries = {
@@ -307,8 +307,9 @@ libraries = {
 speed_scale = 4.0
 
 [node name="SpotLight3D" type="SpotLight3D" parent="Head"]
-visible = false
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.154832, -0.521668, -0.232233)
 light_energy = 5.063
+shadow_enabled = true
 spot_range = 21.054
 spot_angle = 26.24
 

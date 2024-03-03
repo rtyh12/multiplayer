@@ -10,12 +10,15 @@ extends MeshInstance3D
 			return
 		
 		if meshInstance != null:
-			meshInstance.mesh.radius = new * 1e-5
-			meshInstance.mesh.height = new * 1e-5 * 2
+			meshInstance.mesh.radius = new * 1e-4
+			meshInstance.mesh.height = new * 1e-4 * 2
+			meshInstance.mesh.material.set_shader_parameter("scale", 10000 / new)
 		if atmosphere != null:
-			atmosphere.planet_radius = new * 1e-5
+			atmosphere.planet_radius = new * 1e-4
+			atmosphere.atmosphere_height = 200 * 1e-4
+			atmosphere.set_shader_parameter("u_density", 15 * new / 6300)
 		if collisionShape != null:
-			collisionShape.shape.radius = new * 1e-5
+			collisionShape.shape.radius = new * 1e-4
 
 @export var meshInstance: MeshInstance3D
 

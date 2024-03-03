@@ -1,13 +1,17 @@
-[gd_scene load_steps=12 format=3 uid="uid://cp06pey67226l"]
+[gd_scene load_steps=17 format=3 uid="uid://cp06pey67226l"]
 
+[ext_resource type="Script" path="res://ScaleSubViewport.gd" id="1_60ebi"]
 [ext_resource type="PackedScene" uid="uid://bml5qqpix61sh" path="res://background_planets.tscn" id="1_o4clo"]
 [ext_resource type="PackedScene" uid="uid://dc1g5116c7psp" path="res://near_world.tscn" id="1_ukkoh"]
 [ext_resource type="Script" path="res://WindowController.gd" id="3_iidty"]
 [ext_resource type="Shader" path="res://shaders/postprocessing/dither2.gdshader" id="3_vropu"]
 [ext_resource type="Shader" path="res://shaders/postprocessing/palette.gdshader" id="3_w61aa"]
 [ext_resource type="Texture2D" uid="uid://te8abwv4hu3e" path="res://textures/dither/palette_eeve.png" id="4_rvelf"]
-[ext_resource type="Texture2D" uid="uid://cvd6hj6n0lyc6" path="res://textures/palettes/moondrom-1x.png" id="4_ub8j3"]
 [ext_resource type="Texture2D" uid="uid://c3xfnen0tpwu7" path="res://textures/dither/bayer8tile4.png" id="5_iquub"]
+[ext_resource type="Texture2D" uid="uid://c7viy7yviku" path="res://textures/dither/bayer_gimp.png" id="7_rnf6i"]
+[ext_resource type="Script" path="res://Dither.gd" id="7_wqoq6"]
+[ext_resource type="Texture2D" uid="uid://d4dg4c3ot2mk1" path="res://textures/palettes/cretaceous-16-1x.png" id="10_y5ala"]
+[ext_resource type="Script" path="res://Settings.gd" id="11_go6jy"]
 
 [sub_resource type="World3D" id="World3D_ivr5p"]
 
@@ -20,10 +24,13 @@ shader_parameter/u_dither_size = 2
 shader_parameter/u_dither_tex = ExtResource("5_iquub")
 shader_parameter/u_color_tex = ExtResource("4_rvelf")
 
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_kbf18"]
+blend_mode = 1
+
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_8phhi"]
 shader = ExtResource("3_w61aa")
-shader_parameter/colors = 15
-shader_parameter/palette = ExtResource("4_ub8j3")
+shader_parameter/colors = 47
+shader_parameter/palette = ExtResource("10_y5ala")
 
 [node name="Main" type="Control"]
 layout_mode = 3
@@ -33,7 +40,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="SubViewportContainer2" type="SubViewportContainer" parent="."]
+[node name="SubViewportContainer2" type="SubViewportContainer" parent="." node_paths=PackedStringArray("settings")]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -41,19 +48,19 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 stretch = true
+script = ExtResource("1_60ebi")
+settings = NodePath("../Settings")
 
 [node name="SubViewport" type="SubViewport" parent="SubViewportContainer2"]
 own_world_3d = true
 world_3d = SubResource("World3D_ivr5p")
 handle_input_locally = false
-msaa_3d = 3
-use_debanding = true
-size = Vector2i(1152, 648)
+size = Vector2i(1920, 1080)
 render_target_update_mode = 4
 
 [node name="background_planets" parent="SubViewportContainer2/SubViewport" instance=ExtResource("1_o4clo")]
 
-[node name="SubViewportContainer" type="SubViewportContainer" parent="."]
+[node name="SubViewportContainer" type="SubViewportContainer" parent="." node_paths=PackedStringArray("settings")]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -61,12 +68,13 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 stretch = true
+script = ExtResource("1_60ebi")
+settings = NodePath("../Settings")
 
 [node name="SubViewport" type="SubViewport" parent="SubViewportContainer"]
 transparent_bg = true
 handle_input_locally = false
-screen_space_aa = 1
-size = Vector2i(1152, 648)
+size = Vector2i(1920, 1080)
 render_target_update_mode = 4
 
 [node name="near_world" parent="SubViewportContainer/SubViewport" node_paths=PackedStringArray("solar_system") instance=ExtResource("1_ukkoh")]
@@ -84,6 +92,23 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 
+[node name="Dither" type="TextureRect" parent="." node_paths=PackedStringArray("settings")]
+modulate = Color(1, 1, 1, 0.192157)
+texture_filter = 1
+material = SubResource("CanvasItemMaterial_kbf18")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(2, 2)
+mouse_filter = 2
+texture = ExtResource("7_rnf6i")
+stretch_mode = 1
+script = ExtResource("7_wqoq6")
+settings = NodePath("../Settings")
+
 [node name="CanvasLayer2" type="CanvasLayer" parent="."]
 
 [node name="ColorRect" type="ColorRect" parent="CanvasLayer2"]
@@ -97,3 +122,7 @@ mouse_filter = 2
 
 [node name="WindowController" type="Node" parent="."]
 script = ExtResource("3_iidty")
+
+[node name="Settings" type="Node" parent="."]
+script = ExtResource("11_go6jy")
+scale = 2

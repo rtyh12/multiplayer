@@ -19,16 +19,16 @@ gradient = SubResource("Gradient_kk4cn")
 render_priority = 0
 shader = ExtResource("2_typg0")
 shader_parameter/random_seed = 1313
-shader_parameter/scale = 65.725
+shader_parameter/scale = 6.5
 shader_parameter/colormap = SubResource("GradientTexture1D_8m25v")
 
 [sub_resource type="SphereMesh" id="SphereMesh_3gos8"]
 material = SubResource("ShaderMaterial_qjgg5")
-radius = 0.04001
-height = 0.08002
+radius = 0.4001
+height = 0.8002
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_yutd2"]
-radius = 0.04001
+radius = 0.4001
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_byq2h"]
 shading_mode = 0
@@ -76,10 +76,11 @@ sun = NodePath("Sun/DirectionalLight3D")
 sun_sprite = NodePath("Sun/Sprite3D")
 
 [node name="MeshInstance3D" parent="." node_paths=PackedStringArray("sun") instance=ExtResource("2_vf1lf")]
+radius = 6301.0
 sun = NodePath("../Sun/Sprite3D")
 
 [node name="MeshInstance3D2" type="MeshInstance3D" parent="." node_paths=PackedStringArray("meshInstance", "collisionShape")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0651057, 0.0212392, 0.114057)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.74944, 0.928372, 0.652973)
 mesh = SubResource("SphereMesh_3gos8")
 script = ExtResource("3_3fws1")
 radius = 4001.0
@@ -93,7 +94,7 @@ shape = SubResource("SphereShape3D_yutd2")
 
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.005, 0.004, 0.115)
-fov = 60.0
+fov = 150.0
 near = 0.001
 far = 20000.0
 
@@ -119,7 +120,7 @@ environment = SubResource("Environment_oqjs0")
 camera_attributes = SubResource("CameraAttributesPractical_hed05")
 
 [node name="Sun" type="Node3D" parent="."]
-transform = Transform3D(0.533555, -0.784044, 0.317167, 0.81171, 0.580043, 0.0683791, -0.237583, 0.220964, 0.945901, 0, 0, 0)
+transform = Transform3D(0.533555, -0.784044, 0.317167, 0.651895, 0.620157, 0.436391, -0.538843, -0.0260785, 0.842002, 0, 0, 0)
 
 [node name="Sprite3D" type="Sprite3D" parent="Sun"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1001.59)
@@ -129,3 +130,4 @@ billboard = 1
 texture = ExtResource("4_i842e")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="Sun"]
+transform = Transform3D(1, 6.33299e-08, 2.98023e-08, 3.72529e-09, 1, -1.3411e-07, 0, 2.98023e-08, 1, 0, 0, 0)

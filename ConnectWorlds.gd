@@ -23,8 +23,8 @@ func _physics_process(_delta):
 	if OS.get_cmdline_args().has("server"):
 		var orbital_period = 90 * 60
 		var t = Time.get_ticks_msec() / 1000.
-		var start_pos = Vector3.FORWARD * 7500
+		var start_pos = Vector3.LEFT * (6300 + 3000)
 		var now_pos = start_pos.rotated(Vector3.UP, 2 * PI * t / orbital_period)
 		solar_system_position = now_pos
 
-	solar_system.camera.global_position = solar_system_position * 1e-5
+	solar_system.camera.global_position = solar_system_position * 1e-4
