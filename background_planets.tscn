@@ -77,6 +77,8 @@ sun_sprite = NodePath("Sun/Sprite3D")
 
 [node name="MeshInstance3D" parent="." node_paths=PackedStringArray("sun") instance=ExtResource("2_vf1lf")]
 radius = 6301.0
+atmosphere_height = 350.0
+atmosphere_density = 10.0
 sun = NodePath("../Sun/Sprite3D")
 
 [node name="MeshInstance3D2" type="MeshInstance3D" parent="." node_paths=PackedStringArray("meshInstance", "collisionShape")]
@@ -84,6 +86,8 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.74944, 0.928372, 0.652973)
 mesh = SubResource("SphereMesh_3gos8")
 script = ExtResource("3_3fws1")
 radius = 4001.0
+atmosphere_height = null
+atmosphere_density = null
 meshInstance = NodePath(".")
 collisionShape = NodePath("StaticBody3D/CollisionShape3D")
 

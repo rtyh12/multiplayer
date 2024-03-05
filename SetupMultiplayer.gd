@@ -60,7 +60,6 @@ func c_request_join(peer_id: int):
 
 @rpc("any_peer")
 func s_request_join_response(success: bool):
-	print("join response was: ", success)
 	if is_server:
 		return
 	if not success:

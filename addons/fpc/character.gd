@@ -28,7 +28,6 @@ extends CharacterBody3D
 @export var RIGHT : String = "move_right"
 @export var FORWARD : String = "move_up"
 @export var BACKWARD : String = "move_down"
-# @export var PAUSE : String = "ui_cancel"
 @export var TOGGLE_FLASHLIGHT : String = "toggle_flashlight"
 @export var CROUCH : String
 @export var SPRINT : String
@@ -49,15 +48,15 @@ extends CharacterBody3D
 @export_enum("Hold to Crouch", "Toggle Crouch") var crouch_mode : int = 0
 @export_enum("Hold to Sprint", "Toggle Sprint") var sprint_mode : int = 0
 @export var dynamic_fov : bool = true
-@export var continuous_jumping : bool = true
-@export var view_bobbing : bool = true
-@export var jump_animation : bool = true
+@export var continuous_jumping : bool = false
+@export var view_bobbing : bool = false
+@export var jump_animation : bool = false
 
 # Member variables
 var speed : float = base_speed
 var current_speed : float = 0.0
 # States: normal, crouching, sprinting
-var state : String = "normal"
+@export var state : String = "normal"
 var low_ceiling : bool = false # This is for when the cieling is too low and the player needs to crouch.
 var was_on_floor : bool = true
 
@@ -265,12 +264,6 @@ func _process(delta):
 		status += " in the air"
 	$UserInterface/DebugPanel.add_property("State", status, 4)
 	
-	# if Input.is_action_just_pressed(PAUSE):
-	# 	if Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
-	# 		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
-	# 	elif Input.mouse_mode == Input.MOUSE_MODE_VISIBLE:
-	# 		Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
-	
 	HEAD.rotation.x = clamp(HEAD.rotation.x, deg_to_rad(-90), deg_to_rad(90))
 	
 	# Uncomment if you want full controller support
@@ -280,6 +273,9 @@ func _process(delta):
 
 
 func _unhandled_input(event):
+	if not is_multiplayer_authority():
+		return
+
 	if event is InputEventMouseMotion and Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
 		HEAD.rotation_degrees.y -= event.relative.x * mouse_sensitivity
 		HEAD.rotation_degrees.x -= event.relative.y * mouse_sensitivity

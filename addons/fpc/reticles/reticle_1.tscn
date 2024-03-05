@@ -26,6 +26,9 @@ script/source = "extends CenterContainer
 @export_enum(\"None\", \"Round\") var cap_mode : int = 0
 
 
+func _ready() -> void:
+	visible = is_multiplayer_authority()
+
 func _process(_delta):
 	if visible: # If the reticle is disabled (not visible), don't bother updating it
 		update_reticle_settings()
