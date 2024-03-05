@@ -1,0 +1,112 @@
+[gd_scene load_steps=7 format=3 uid="uid://c7hda4vxvvqwf"]
+
+[ext_resource type="PackedScene" uid="uid://cpqfyyy46sfjm" path="res://dungeon_generator/tiles/door.tscn" id="1_6uatn"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_rq0fa"]
+size = Vector2(20, 2)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_12cpp"]
+size = Vector2(9, 11)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_vq745"]
+size = Vector2(4, 32)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_how2i"]
+size = Vector2(4, 26)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_j6ix1"]
+size = Vector2(4, 8)
+
+[node name="Tiles" type="Node2D"]
+
+[node name="Node2D" type="Node2D" parent="."]
+position = Vector2(34, 2)
+
+[node name="boxes" type="Node2D" parent="Node2D"]
+
+[node name="Area2D" type="Area2D" parent="Node2D/boxes"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Node2D/boxes/Area2D"]
+position = Vector2(0, 4)
+shape = SubResource("RectangleShape2D_rq0fa")
+
+[node name="doors" type="Node2D" parent="Node2D"]
+position = Vector2(-34, -2)
+
+[node name="Line2D" parent="Node2D/doors" instance=ExtResource("1_6uatn")]
+position = Vector2(25, 5)
+
+[node name="Line2D2" parent="Node2D/doors" instance=ExtResource("1_6uatn")]
+position = Vector2(44, 6)
+rotation = 1.57079
+
+[node name="Node2D2" type="Node2D" parent="."]
+visible = false
+position = Vector2(34, 2)
+
+[node name="boxes" type="Node2D" parent="Node2D2"]
+
+[node name="Area2D" type="Area2D" parent="Node2D2/boxes"]
+position = Vector2(40, -1)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Node2D2/boxes/Area2D"]
+position = Vector2(5.5, 8.5)
+shape = SubResource("RectangleShape2D_12cpp")
+
+[node name="doors" type="Node2D" parent="Node2D2"]
+position = Vector2(6, -3)
+
+[node name="Line2D" parent="Node2D2/doors" instance=ExtResource("1_6uatn")]
+position = Vector2(35, 10)
+rotation = -1.57079
+
+[node name="Line2D2" parent="Node2D2/doors" instance=ExtResource("1_6uatn")]
+position = Vector2(44, 6)
+rotation = 1.57079
+
+[node name="Line2D3" parent="Node2D2/doors" instance=ExtResource("1_6uatn")]
+position = Vector2(39, 16)
+rotation = 3.14159
+
+[node name="Node2D3" type="Node2D" parent="."]
+visible = false
+position = Vector2(66, 2)
+
+[node name="boxes" type="Node2D" parent="Node2D3"]
+
+[node name="Area2D" type="Area2D" parent="Node2D3/boxes"]
+position = Vector2(40, -1)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Node2D3/boxes/Area2D"]
+position = Vector2(4, 14)
+shape = SubResource("RectangleShape2D_vq745")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="Node2D3/boxes/Area2D"]
+position = Vector2(12, 17)
+shape = SubResource("RectangleShape2D_how2i")
+
+[node name="CollisionShape2D3" type="CollisionShape2D" parent="Node2D3/boxes/Area2D"]
+position = Vector2(8, 21)
+shape = SubResource("RectangleShape2D_j6ix1")
+
+[node name="doors" type="Node2D" parent="Node2D3"]
+position = Vector2(6, -3)
+
+[node name="Line2D" parent="Node2D3/doors" instance=ExtResource("1_6uatn")]
+position = Vector2(36, 18)
+rotation = -1.57079
+
+[node name="Line2D4" parent="Node2D3/doors" instance=ExtResource("1_6uatn")]
+position = Vector2(38, 0)
+
+[node name="Line2D5" parent="Node2D3/doors" instance=ExtResource("1_6uatn")]
+position = Vector2(46, 32)
+rotation = -3.14159
+
+[node name="Line2D2" parent="Node2D3/doors" instance=ExtResource("1_6uatn")]
+position = Vector2(46, 6)
+rotation = 6.28318
+
+[node name="Line2D3" parent="Node2D3/doors" instance=ExtResource("1_6uatn")]
+position = Vector2(38, 32)
+rotation = 3.14159

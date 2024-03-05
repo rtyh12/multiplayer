@@ -1,0 +1,30 @@
+[gd_scene load_steps=3 format=3 uid="uid://c31k5gmu3bqk7"]
+
+[ext_resource type="PackedScene" uid="uid://cpqfyyy46sfjm" path="res://NaiveDoorFollow/tiles/door.tscn" id="1_te148"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_rq0fa"]
+size = Vector2(9, 13)
+
+[node name="Node2D" type="Node2D"]
+position = Vector2(34, 2)
+
+[node name="boxes" type="Node2D" parent="."]
+
+[node name="StaticBody2D" type="StaticBody2D" parent="boxes"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="boxes/StaticBody2D"]
+position = Vector2(4.5, 5.5)
+shape = SubResource("RectangleShape2D_rq0fa")
+
+[node name="doors" type="Node2D" parent="."]
+
+[node name="Line2D" parent="doors" instance=ExtResource("1_te148")]
+position = Vector2(9, 11)
+rotation = 1.57079
+
+[node name="Line2D2" parent="doors" instance=ExtResource("1_te148")]
+position = Vector2(0, 7)
+rotation = -1.57079
+
+[node name="Line2D3" parent="doors" instance=ExtResource("1_te148")]
+position = Vector2(2, -1)
