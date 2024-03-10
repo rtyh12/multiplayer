@@ -1,0 +1,29 @@
+[gd_scene load_steps=5 format=3 uid="uid://bqkyqqgvjh8h6"]
+
+[ext_resource type="PackedScene" uid="uid://bnfsomafvfelx" path="res://models/flashlight.blend" id="1_6g7fu"]
+[ext_resource type="Script" path="res://items/Flashlight.gd" id="1_s8mwh"]
+[ext_resource type="Texture2D" uid="uid://c2newpntgxr0q" path="res://textures/light_01.png" id="2_lmwww"]
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_s6e4g"]
+properties/0/path = NodePath("flashlight/SpotLight3D:visible")
+properties/0/spawn = true
+properties/0/replication_mode = 1
+
+[node name="Node3D" type="Node3D" node_paths=PackedStringArray("light")]
+script = ExtResource("1_s8mwh")
+light = NodePath("flashlight/SpotLight3D")
+
+[node name="flashlight" parent="." instance=ExtResource("1_6g7fu")]
+
+[node name="SpotLight3D" type="SpotLight3D" parent="flashlight"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.173)
+light_energy = 1.446
+light_projector = ExtResource("2_lmwww")
+shadow_enabled = true
+spot_range = 21.054
+spot_attenuation = 0.392292
+spot_angle = 34.52
+spot_angle_attenuation = 1.68179
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_s6e4g")

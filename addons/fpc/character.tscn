@@ -1,7 +1,8 @@
-[gd_scene load_steps=20 format=3 uid="uid://cc1m2a1obsyn4"]
+[gd_scene load_steps=21 format=3 uid="uid://cc1m2a1obsyn4"]
 
 [ext_resource type="Script" path="res://addons/fpc/character.gd" id="1_0t4e8"]
 [ext_resource type="PackedScene" uid="uid://3mij3cjhkwsm" path="res://addons/fpc/reticles/reticle_1.tscn" id="2_uuexm"]
+[ext_resource type="Script" path="res://addons/fpc/Hand.gd" id="2_xsh6a"]
 [ext_resource type="Script" path="res://addons/fpc/debug.gd" id="3_x1wcc"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_kp17n"]
@@ -11,6 +12,7 @@ clearcoat_roughness = 0.2
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_jw1de"]
 material = SubResource("StandardMaterial3D_kp17n")
+radius = 0.3
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_uy03j"]
 
@@ -263,14 +265,11 @@ properties/1/replication_mode = 1
 properties/2/path = NodePath("Head:rotation")
 properties/2/spawn = true
 properties/2/replication_mode = 1
-properties/3/path = NodePath("Head/SpotLight3D:visible")
+properties/3/path = NodePath(".:state")
 properties/3/spawn = true
 properties/3/replication_mode = 1
-properties/4/path = NodePath(".:state")
-properties/4/spawn = true
-properties/4/replication_mode = 1
 
-[node name="Character" type="CharacterBody3D" node_paths=PackedStringArray("HEAD", "CAMERA", "HEADBOB_ANIMATION", "JUMP_ANIMATION", "CROUCH_ANIMATION", "COLLISION_MESH", "FLASHLIGHT")]
+[node name="Character" type="CharacterBody3D" node_paths=PackedStringArray("HEAD", "CAMERA", "HEADBOB_ANIMATION", "JUMP_ANIMATION", "CROUCH_ANIMATION", "COLLISION_MESH")]
 collision_layer = 2
 script = ExtResource("1_0t4e8")
 HEAD = NodePath("Head")
@@ -279,9 +278,9 @@ HEADBOB_ANIMATION = NodePath("Head/HeadbobAnimation")
 JUMP_ANIMATION = NodePath("Head/JumpAnimation")
 CROUCH_ANIMATION = NodePath("CrouchAnimation")
 COLLISION_MESH = NodePath("Collision")
-FLASHLIGHT = NodePath("Head/SpotLight3D")
 CROUCH = "crouch"
 SPRINT = "sprint"
+in_air_momentum = false
 
 [node name="Mesh" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
@@ -301,13 +300,13 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
 
 [node name="Camera" type="Camera3D" parent="Head"]
 transform = Transform3D(1, 0, 0, 0, 0.999391, -0.0348995, 0, 0.0348995, 0.999391, 0, 0, 0)
-fov = 151.2
+fov = 48.9
 
 [node name="HeadbobAnimation" type="AnimationPlayer" parent="Head"]
 libraries = {
 "": SubResource("AnimationLibrary_o0unb")
 }
-blend_times = [&"headbob", &"RESET", 0.5, &"RESET", &"headbob", 0.5, &"RESET", &"RESET", 0.5]
+blend_times = [&"RESET", &"RESET", 0.5, &"RESET", &"headbob", 0.5, &"headbob", &"RESET", 0.5]
 
 [node name="JumpAnimation" type="AnimationPlayer" parent="Head"]
 libraries = {
@@ -315,12 +314,9 @@ libraries = {
 }
 speed_scale = 4.0
 
-[node name="SpotLight3D" type="SpotLight3D" parent="Head"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.154832, -0.521668, -0.232233)
-light_energy = 5.063
-shadow_enabled = true
-spot_range = 21.054
-spot_angle = 26.24
+[node name="hand" type="Node3D" parent="Head"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0855979, -0.110014, -0.166981)
+script = ExtResource("2_xsh6a")
 
 [node name="UserInterface" type="Control" parent="."]
 layout_mode = 3

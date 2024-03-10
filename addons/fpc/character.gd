@@ -57,6 +57,30 @@ var speed : float = base_speed
 var current_speed : float = 0.0
 # States: normal, crouching, sprinting
 @export var state : String = "normal"
+
+	# set(new):
+	# 	match new:
+
+	# 		"normal":
+	# 			if state == "crouching":
+	# 				CROUCH_ANIMATION.play_backwards("crouch")
+	# 			speed = base_speed
+
+	# 		"crouching":
+	# 			speed = crouch_speed
+	# 			CROUCH_ANIMATION.play("crouch")
+
+	# 		"sprinting":
+	# 			if state == "crouching":
+	# 				CROUCH_ANIMATION.play_backwards("crouch")
+	# 			state = "sprinting"
+	# 			speed = sprint_speed
+	# 			if new == "crouching":
+	# 				pass
+		
+	# 	state = new
+				
+
 var low_ceiling : bool = false # This is for when the cieling is too low and the player needs to crouch.
 var was_on_floor : bool = true
 
@@ -123,8 +147,8 @@ func _physics_process(delta):
 		
 		was_on_floor = is_on_floor() # This must always be at the end of physics_process
 
-	if Input.is_action_just_pressed(TOGGLE_FLASHLIGHT):
-		FLASHLIGHT.visible = not FLASHLIGHT.visible
+	# if Input.is_action_just_pressed(TOGGLE_FLASHLIGHT):
+	# 	FLASHLIGHT.visible = not FLASHLIGHT.visible
 
 
 func handle_jumping():
@@ -234,9 +258,9 @@ func enter_sprint_state():
 
 func update_camera_fov():
 	if state == "sprinting":
-		CAMERA.fov = lerp(CAMERA.fov, 90.0, 0.3)
+		CAMERA.fov = lerp(CAMERA.fov, 75.0, 0.1)
 	else:
-		CAMERA.fov = lerp(CAMERA.fov, 80.0, 0.3)
+		CAMERA.fov = lerp(CAMERA.fov, 70.0, 0.1)
 
 
 func headbob_animation(moving):

@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="Item" load_steps=3 format=3 uid="uid://7qujqpbn2c7b"]
+
+[ext_resource type="Script" path="res://Item.gd" id="1_scu2o"]
+[ext_resource type="PackedScene" uid="uid://bqkyqqgvjh8h6" path="res://items/flashlight.tscn" id="1_t67ug"]
+
+[resource]
+script = ExtResource("1_scu2o")
+id = "flashlight"
+scene = ExtResource("1_t67ug")

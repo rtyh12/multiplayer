@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://cp06pey67226l"]
+[gd_scene load_steps=18 format=3 uid="uid://cp06pey67226l"]
 
 [ext_resource type="Script" path="res://ScaleSubViewport.gd" id="1_60ebi"]
 [ext_resource type="PackedScene" uid="uid://bml5qqpix61sh" path="res://background_planets.tscn" id="1_o4clo"]
@@ -10,7 +10,8 @@
 [ext_resource type="Texture2D" uid="uid://c3xfnen0tpwu7" path="res://textures/dither/bayer8tile4.png" id="5_iquub"]
 [ext_resource type="Texture2D" uid="uid://bq4om4bo2ei8y" path="res://textures/dither/bayer4tile8.png" id="7_emoy0"]
 [ext_resource type="Script" path="res://Dither.gd" id="7_wqoq6"]
-[ext_resource type="Texture2D" uid="uid://blnrpvhdiwbo5" path="res://textures/palettes/twilight-5-1x.png" id="10_0jpmd"]
+[ext_resource type="Texture2D" uid="uid://c3km7dapp7qha" path="res://textures/palettes/stellar-winds-1x.png" id="10_lt1nj"]
+[ext_resource type="PackedScene" uid="uid://8hy3feopbvf" path="res://ui.tscn" id="11_4ah15"]
 [ext_resource type="Script" path="res://Settings.gd" id="11_go6jy"]
 
 [sub_resource type="World3D" id="World3D_ivr5p"]
@@ -29,8 +30,8 @@ blend_mode = 1
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_8phhi"]
 shader = ExtResource("3_w61aa")
-shader_parameter/colors = 47
-shader_parameter/palette = ExtResource("10_0jpmd")
+shader_parameter/colors = 50
+shader_parameter/palette = ExtResource("10_lt1nj")
 
 [node name="Main" type="Control"]
 layout_mode = 3
@@ -84,10 +85,22 @@ render_target_update_mode = 4
 [node name="near_world" parent="SubViewportContainer/SubViewport" node_paths=PackedStringArray("solar_system") instance=ExtResource("1_ukkoh")]
 solar_system = NodePath("../../../SubViewportContainer2/SubViewport/background_planets")
 
-[node name="CanvasLayer" type="CanvasLayer" parent="."]
+[node name="UI" parent="SubViewportContainer/SubViewport" instance=ExtResource("11_4ah15")]
+mouse_filter = 1
+
+[node name="Postprocessing" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="CanvasLayer" type="CanvasLayer" parent="Postprocessing"]
 visible = false
 
-[node name="ColorRect" type="ColorRect" parent="CanvasLayer"]
+[node name="ColorRect" type="ColorRect" parent="Postprocessing/CanvasLayer"]
 material = SubResource("ShaderMaterial_52nm1")
 anchors_preset = 15
 anchor_right = 1.0
@@ -96,8 +109,8 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 
-[node name="Dither" type="TextureRect" parent="." node_paths=PackedStringArray("settings")]
-modulate = Color(1, 1, 1, 0.0745098)
+[node name="Dither" type="TextureRect" parent="Postprocessing" node_paths=PackedStringArray("settings")]
+modulate = Color(1, 1, 1, 0.0823529)
 texture_filter = 1
 material = SubResource("CanvasItemMaterial_kbf18")
 layout_mode = 1
@@ -111,11 +124,11 @@ mouse_filter = 2
 texture = ExtResource("7_emoy0")
 stretch_mode = 1
 script = ExtResource("7_wqoq6")
-settings = NodePath("../Settings")
+settings = NodePath("../../Settings")
 
-[node name="CanvasLayer2" type="CanvasLayer" parent="."]
+[node name="Palette" type="CanvasLayer" parent="Postprocessing"]
 
-[node name="ColorRect" type="ColorRect" parent="CanvasLayer2"]
+[node name="ColorRect" type="ColorRect" parent="Postprocessing/Palette"]
 material = SubResource("ShaderMaterial_8phhi")
 anchors_preset = 15
 anchor_right = 1.0
@@ -129,3 +142,4 @@ script = ExtResource("3_iidty")
 
 [node name="Settings" type="Node" parent="."]
 script = ExtResource("11_go6jy")
+scale = 2

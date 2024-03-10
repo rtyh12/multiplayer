@@ -82,12 +82,10 @@ atmosphere_density = 10.0
 sun = NodePath("../Sun/Sprite3D")
 
 [node name="MeshInstance3D2" type="MeshInstance3D" parent="." node_paths=PackedStringArray("meshInstance", "collisionShape")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.74944, 0.928372, 0.652973)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.889055, 0.450514, 0.523074)
 mesh = SubResource("SphereMesh_3gos8")
 script = ExtResource("3_3fws1")
 radius = 4001.0
-atmosphere_height = null
-atmosphere_density = null
 meshInstance = NodePath(".")
 collisionShape = NodePath("StaticBody3D/CollisionShape3D")
 
@@ -124,12 +122,12 @@ environment = SubResource("Environment_oqjs0")
 camera_attributes = SubResource("CameraAttributesPractical_hed05")
 
 [node name="Sun" type="Node3D" parent="."]
-transform = Transform3D(0.533555, -0.784044, 0.317167, 0.651895, 0.620157, 0.436391, -0.538843, -0.0260785, 0.842002, 0, 0, 0)
+transform = Transform3D(-0.949553, 0.300109, 0.0910219, 0.229398, 0.466777, 0.854105, 0.213837, 0.831898, -0.512074, 0, 0, 0)
 
 [node name="Sprite3D" type="Sprite3D" parent="Sun"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1001.59)
 modulate = Color(50, 50, 50, 1)
-pixel_size = 2.7166
+pixel_size = 4.0
 billboard = 1
 texture = ExtResource("4_i842e")
 

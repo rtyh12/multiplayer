@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://dc1g5116c7psp"]
+[gd_scene load_steps=23 format=3 uid="uid://dc1g5116c7psp"]
 
 [ext_resource type="Script" path="res://ConnectWorlds.gd" id="1_5ycu2"]
 [ext_resource type="PackedScene" uid="uid://cc1m2a1obsyn4" path="res://addons/fpc/character.tscn" id="1_e18vq"]
@@ -7,11 +7,15 @@
 [ext_resource type="Texture2D" uid="uid://dsv4jm4vydflb" path="res://textures/orange.png" id="4_1ns5t"]
 [ext_resource type="PackedScene" uid="uid://ciektd48dx6yd" path="res://SetupMultiplayer.tscn" id="4_2f6lb"]
 [ext_resource type="PackedScene" uid="uid://bj233kjdsseqq" path="res://blendertest.blend" id="7_3480n"]
+[ext_resource type="PackedScene" uid="uid://bllbiv0ckudj3" path="res://corridor_room.blend" id="8_hqqrf"]
+[ext_resource type="PackedScene" uid="uid://bguo0pqjmx4pk" path="res://big_room.blend" id="9_voiyk"]
+[ext_resource type="PackedScene" uid="uid://28rvfnbw8tum" path="res://transparency_test.blend" id="10_yhi25"]
+[ext_resource type="PackedScene" uid="uid://cjt55qmf26dof" path="res://ship_maybe.blend" id="11_86022"]
 
 [sub_resource type="Environment" id="Environment_j85ut"]
 fog_density = 0.0367
 volumetric_fog_enabled = true
-volumetric_fog_density = 0.0291
+volumetric_fog_density = 0.0143
 
 [sub_resource type="Gradient" id="Gradient_ur0vy"]
 colors = PackedColorArray(0, 0.476245, 0.0193456, 1, 0.360494, 0.612721, 0.119744, 1)
@@ -87,6 +91,7 @@ environment = SubResource("Environment_j85ut")
 [node name="sun" type="DirectionalLight3D" parent="."]
 transform = Transform3D(0.472143, 0.440639, 0.763491, -0.63058, -0.436401, 0.641813, 0.615996, -0.784469, 0.0718144, 0.320881, 0.116536, 0)
 shadow_enabled = true
+shadow_bias = 0.077
 
 [node name="terrain" type="Node3D" parent="."]
 
@@ -154,14 +159,6 @@ shadow_enabled = true
 spot_range = 42.2994
 spot_angle = 39.375
 
-[node name="SpotLight3D2" type="SpotLight3D" parent="."]
-transform = Transform3D(0.779043, -0.16619, -0.604544, 0.626971, 0.206499, 0.751176, 0, -0.96423, 0.265068, -1.17431, 11.9706, 6.0863)
-light_color = Color(0.356863, 0.635294, 0.823529, 1)
-light_energy = 7.378
-shadow_enabled = true
-spot_range = 42.2994
-spot_angle = 39.375
-
 [node name="OmniLight3D" type="OmniLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20.0057, 7.40387, 9.8333)
 light_energy = 0.0
@@ -179,3 +176,53 @@ preprocess = 600.0
 visibility_aabb = AABB(-104.155, -9.50881, -116.841, 208.309, 19.0176, 233.683)
 process_material = SubResource("ParticleProcessMaterial_d0tih")
 draw_pass_1 = SubResource("SphereMesh_daigh")
+
+[node name="big_room" parent="." instance=ExtResource("9_voiyk")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -5, 0, 25)
+
+[node name="Node3D" type="Node3D" parent="."]
+
+[node name="corridor_room" parent="Node3D" instance=ExtResource("8_hqqrf")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15, 0, -3.05787)
+
+[node name="corridor_room2" parent="Node3D" instance=ExtResource("8_hqqrf")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -24, 0, -14.0579)
+
+[node name="corridor_room3" parent="Node3D" instance=ExtResource("8_hqqrf")]
+transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, -13, 0, -23.0579)
+
+[node name="corridor_room4" parent="Node3D" instance=ExtResource("8_hqqrf")]
+transform = Transform3D(1, 0, -1.74846e-07, 0, 1, 0, 1.74846e-07, 0, 1, 5, 0, -21.0579)
+
+[node name="corridor_room5" parent="Node3D" instance=ExtResource("8_hqqrf")]
+transform = Transform3D(3.0598e-07, 0, 1, 0, 1, 0, -1, 0, 3.0598e-07, 16, 0, -30.0579)
+
+[node name="corridor_room6" parent="Node3D" instance=ExtResource("8_hqqrf")]
+transform = Transform3D(-3.93402e-07, 0, -1, 0, 1, 0, 1, 0, -3.93402e-07, 16, 0, -50.0579)
+
+[node name="corridor_room7" parent="Node3D" instance=ExtResource("8_hqqrf")]
+transform = Transform3D(-1, 0, 3.8743e-07, 0, 1, 0, -3.8743e-07, 0, -1, 27, 0, -59.0579)
+
+[node name="corridor_room8" parent="Node3D" instance=ExtResource("8_hqqrf")]
+transform = Transform3D(4.31142e-07, 0, 1, 0, 1, 0, -1, 0, 4.31142e-07, 36, 0, -48.0579)
+
+[node name="corridor_room9" parent="Node3D" instance=ExtResource("8_hqqrf")]
+transform = Transform3D(-5.18564e-07, 0, -1, 0, 1, 0, 1, 0, -5.18564e-07, 34, 0, -30.0579)
+
+[node name="corridor_room10" parent="Node3D" instance=ExtResource("8_hqqrf")]
+transform = Transform3D(6.05987e-07, 0, 1, 0, 1, 0, -1, 0, 6.05987e-07, 34, 0, -10.0579)
+
+[node name="corridor_room11" parent="Node3D" instance=ExtResource("8_hqqrf")]
+transform = Transform3D(1, 0, -6.49698e-07, 0, 1, 0, 6.49698e-07, 0, 1, 23, 0.001, -1.058)
+
+[node name="transparency_test" parent="." instance=ExtResource("10_yhi25")]
+transform = Transform3D(1.39132, 0, 0, 0, -1.14107e-07, -1, 0, 2.61046, -4.37114e-08, 9, 6.25704, 31.746)
+
+[node name="ship_maybe" parent="." instance=ExtResource("11_86022")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 9.02985, 0, 36.2202)
+
+[node name="SpotLight3D2" type="SpotLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, -23.7063, 20.0907, 14.7943)
+shadow_enabled = true
+spot_range = 37.129
+spot_angle = 53.0882

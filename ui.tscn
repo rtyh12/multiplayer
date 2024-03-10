@@ -1,0 +1,44 @@
+[gd_scene load_steps=4 format=3 uid="uid://8hy3feopbvf"]
+
+[ext_resource type="PackedScene" uid="uid://bf1nw4i8jq7kp" path="res://ui_inventory_slot.tscn" id="1_at2rf"]
+[ext_resource type="Script" path="res://InventoryBar.gd" id="1_irvuw"]
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_ssfcr"]
+properties/0/path = NodePath("MarginContainer:item_ids")
+properties/0/spawn = true
+properties/0/replication_mode = 1
+
+[node name="UI" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="." node_paths=PackedStringArray("spawn_target")]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -6.0
+offset_top = -4.0
+offset_right = 6.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_constants/margin_bottom = 4
+script = ExtResource("1_irvuw")
+ui_slot_scene = ExtResource("1_at2rf")
+spawn_target = NodePath("HBoxContainer")
+item_ids = Array[String](["res://resources/almond.tres", "res://resources/flashlight.tres", "res://resources/almond.tres", "res://resources/flashlight.tres"])
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+mouse_filter = 2
+alignment = 1
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_ssfcr")

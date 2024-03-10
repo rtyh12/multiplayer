@@ -1,3 +1,4 @@
 .godot
-/*.bin
+bin
 *.blend1
+*.tmp
