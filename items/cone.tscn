@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://cyv6qa8tspfna"]
+
+[ext_resource type="PackedScene" uid="uid://40ts8ajjbrxp" path="res://models/cone.blend" id="2_g1i11"]
+
+[node name="Node3D" type="Node3D"]
+
+[node name="cone" parent="." instance=ExtResource("2_g1i11")]

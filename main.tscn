@@ -1,18 +1,21 @@
-[gd_scene load_steps=18 format=3 uid="uid://cp06pey67226l"]
+[gd_scene load_steps=23 format=3 uid="uid://cp06pey67226l"]
 
 [ext_resource type="Script" path="res://ScaleSubViewport.gd" id="1_60ebi"]
 [ext_resource type="PackedScene" uid="uid://bml5qqpix61sh" path="res://background_planets.tscn" id="1_o4clo"]
 [ext_resource type="PackedScene" uid="uid://dc1g5116c7psp" path="res://near_world.tscn" id="1_ukkoh"]
 [ext_resource type="Script" path="res://WindowController.gd" id="3_iidty"]
 [ext_resource type="Shader" path="res://shaders/postprocessing/dither2.gdshader" id="3_vropu"]
-[ext_resource type="Shader" path="res://shaders/postprocessing/palette.gdshader" id="3_w61aa"]
 [ext_resource type="Texture2D" uid="uid://te8abwv4hu3e" path="res://textures/dither/palette_eeve.png" id="4_rvelf"]
 [ext_resource type="Texture2D" uid="uid://c3xfnen0tpwu7" path="res://textures/dither/bayer8tile4.png" id="5_iquub"]
 [ext_resource type="Texture2D" uid="uid://bq4om4bo2ei8y" path="res://textures/dither/bayer4tile8.png" id="7_emoy0"]
 [ext_resource type="Script" path="res://Dither.gd" id="7_wqoq6"]
-[ext_resource type="Texture2D" uid="uid://c3km7dapp7qha" path="res://textures/palettes/stellar-winds-1x.png" id="10_lt1nj"]
+[ext_resource type="Shader" path="res://shaders/postprocessing/dither3.gdshader" id="10_a34he"]
 [ext_resource type="PackedScene" uid="uid://8hy3feopbvf" path="res://ui.tscn" id="11_4ah15"]
 [ext_resource type="Script" path="res://Settings.gd" id="11_go6jy"]
+[ext_resource type="Texture2D" uid="uid://bb64gn48gy0i7" path="res://textures/palettes/anna_lena_fall_day_you_wouldnt_steal_a_palette - Copy.png" id="11_y0paw"]
+[ext_resource type="Script" path="res://DitherScaler.gd" id="12_dkbsh"]
+[ext_resource type="Shader" path="res://shaders/postprocessing/palette_oklab.gdshader" id="12_gxm6c"]
+[ext_resource type="Shader" path="res://palette_oklab_posterize.gdshader" id="14_3fpfm"]
 
 [sub_resource type="World3D" id="World3D_ivr5p"]
 
@@ -28,10 +31,20 @@ shader_parameter/u_color_tex = ExtResource("4_rvelf")
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_kbf18"]
 blend_mode = 1
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_hpuav"]
+shader = ExtResource("10_a34he")
+shader_parameter/alpha = 0.118
+shader_parameter/scale = 2
+shader_parameter/ditherTexture = ExtResource("7_emoy0")
+
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_8phhi"]
-shader = ExtResource("3_w61aa")
-shader_parameter/colors = 50
-shader_parameter/palette = ExtResource("10_lt1nj")
+shader = ExtResource("12_gxm6c")
+shader_parameter/colors = 20
+shader_parameter/palette = ExtResource("11_y0paw")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_e5d17"]
+shader = ExtResource("14_3fpfm")
+shader_parameter/target_hue = Color(0.054902, 0.458824, 0, 1)
 
 [node name="Main" type="Control"]
 layout_mode = 3
@@ -40,28 +53,6 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-
-[node name="SubViewportContainer2" type="SubViewportContainer" parent="." node_paths=PackedStringArray("settings")]
-texture_filter = 1
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-stretch = true
-script = ExtResource("1_60ebi")
-settings = NodePath("../Settings")
-
-[node name="SubViewport" type="SubViewport" parent="SubViewportContainer2"]
-own_world_3d = true
-world_3d = SubResource("World3D_ivr5p")
-handle_input_locally = false
-msaa_3d = 3
-size = Vector2i(1920, 1080)
-render_target_update_mode = 4
-
-[node name="background_planets" parent="SubViewportContainer2/SubViewport" instance=ExtResource("1_o4clo")]
 
 [node name="SubViewportContainer" type="SubViewportContainer" parent="." node_paths=PackedStringArray("settings")]
 texture_filter = 1
@@ -76,20 +67,61 @@ script = ExtResource("1_60ebi")
 settings = NodePath("../Settings")
 
 [node name="SubViewport" type="SubViewport" parent="SubViewportContainer"]
+size = Vector2i(1920, 1080)
+
+[node name="Game" type="Control" parent="SubViewportContainer/SubViewport"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Background" type="SubViewportContainer" parent="SubViewportContainer/SubViewport/Game"]
+texture_filter = 1
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+stretch = true
+
+[node name="SubViewport" type="SubViewport" parent="SubViewportContainer/SubViewport/Game/Background"]
+own_world_3d = true
+world_3d = SubResource("World3D_ivr5p")
+handle_input_locally = false
+msaa_3d = 3
+size = Vector2i(1920, 1080)
+render_target_update_mode = 4
+
+[node name="background_planets" parent="SubViewportContainer/SubViewport/Game/Background/SubViewport" instance=ExtResource("1_o4clo")]
+
+[node name="NearWorld" type="SubViewportContainer" parent="SubViewportContainer/SubViewport/Game"]
+texture_filter = 1
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+stretch = true
+
+[node name="SubViewport" type="SubViewport" parent="SubViewportContainer/SubViewport/Game/NearWorld"]
 transparent_bg = true
 handle_input_locally = false
 msaa_3d = 3
 size = Vector2i(1920, 1080)
 render_target_update_mode = 4
 
-[node name="near_world" parent="SubViewportContainer/SubViewport" node_paths=PackedStringArray("solar_system") instance=ExtResource("1_ukkoh")]
-solar_system = NodePath("../../../SubViewportContainer2/SubViewport/background_planets")
+[node name="near_world" parent="SubViewportContainer/SubViewport/Game/NearWorld/SubViewport" node_paths=PackedStringArray("solar_system") instance=ExtResource("1_ukkoh")]
+solar_system = NodePath("../../../Background/SubViewport/background_planets")
 
-[node name="UI" parent="SubViewportContainer/SubViewport" instance=ExtResource("11_4ah15")]
+[node name="UI" parent="SubViewportContainer/SubViewport/Game/NearWorld/SubViewport" instance=ExtResource("11_4ah15")]
 mouse_filter = 1
 
-[node name="Postprocessing" type="Control" parent="."]
-layout_mode = 1
+[node name="Postprocessing" type="Control" parent="SubViewportContainer/SubViewport"]
+layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -97,10 +129,10 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 
-[node name="CanvasLayer" type="CanvasLayer" parent="Postprocessing"]
+[node name="CanvasLayer" type="CanvasLayer" parent="SubViewportContainer/SubViewport/Postprocessing"]
 visible = false
 
-[node name="ColorRect" type="ColorRect" parent="Postprocessing/CanvasLayer"]
+[node name="ColorRect" type="ColorRect" parent="SubViewportContainer/SubViewport/Postprocessing/CanvasLayer"]
 material = SubResource("ShaderMaterial_52nm1")
 anchors_preset = 15
 anchor_right = 1.0
@@ -109,8 +141,9 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 
-[node name="Dither" type="TextureRect" parent="Postprocessing" node_paths=PackedStringArray("settings")]
-modulate = Color(1, 1, 1, 0.0823529)
+[node name="SpriteDither" type="TextureRect" parent="SubViewportContainer/SubViewport/Postprocessing" node_paths=PackedStringArray("settings")]
+visible = false
+modulate = Color(1, 1, 1, 0.113725)
 texture_filter = 1
 material = SubResource("CanvasItemMaterial_kbf18")
 layout_mode = 1
@@ -124,12 +157,37 @@ mouse_filter = 2
 texture = ExtResource("7_emoy0")
 stretch_mode = 1
 script = ExtResource("7_wqoq6")
-settings = NodePath("../../Settings")
+settings = NodePath("../../../../Settings")
 
-[node name="Palette" type="CanvasLayer" parent="Postprocessing"]
+[node name="Dither" type="CanvasLayer" parent="SubViewportContainer/SubViewport/Postprocessing"]
 
-[node name="ColorRect" type="ColorRect" parent="Postprocessing/Palette"]
+[node name="ColorRect" type="ColorRect" parent="SubViewportContainer/SubViewport/Postprocessing/Dither" node_paths=PackedStringArray("settings")]
+material = SubResource("ShaderMaterial_hpuav")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("12_dkbsh")
+settings = NodePath("../../../../../Settings")
+
+[node name="Palette" type="CanvasLayer" parent="SubViewportContainer/SubViewport/Postprocessing"]
+
+[node name="ColorRect" type="ColorRect" parent="SubViewportContainer/SubViewport/Postprocessing/Palette"]
 material = SubResource("ShaderMaterial_8phhi")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Palette2" type="CanvasLayer" parent="SubViewportContainer/SubViewport/Postprocessing"]
+visible = false
+
+[node name="ColorRect" type="ColorRect" parent="SubViewportContainer/SubViewport/Postprocessing/Palette2"]
+material = SubResource("ShaderMaterial_e5d17")
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -142,4 +200,3 @@ script = ExtResource("3_iidty")
 
 [node name="Settings" type="Node" parent="."]
 script = ExtResource("11_go6jy")
-scale = 2

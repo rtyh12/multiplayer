@@ -1,3 +1,47 @@
+// OKLAB =====================
+
+const mat3 OKLAB_2_CBRTLMS = mat3(
+	vec3( 1.0,           1.0,           1.0         ),
+	vec3(-0.3963377774, -0.1055613458, -0.0894841775),
+	vec3( 0.2158037573, -0.0638541728, -1.2914855480));
+	
+const mat3 LMS_2_RGB = mat3(
+	vec3( 4.0767416621, -1.2684380046, -0.0041960863),
+	vec3(-3.3077115913,  2.6097574011, -0.7034186147),
+	vec3( 0.2309699292, -0.3413193965,  1.7076147010));
+		
+const mat3 RGB_2_LMS = mat3(                
+    vec3(0.4122214708,  0.2119034982,  0.0883024619),
+    vec3(0.5363325363,  0.6806995451,  0.2817188376),
+    vec3(0.0514459929,  0.1073969566,  0.6299787005));
+		
+const mat3 CBRTLMS_2_OKLAB = mat3(                
+    vec3( 0.2104542553f,  1.9779984951f,  0.0259040371f),
+    vec3( 0.7936177850f, -2.4285922050f,  0.7827717662f),
+    vec3(-0.0040720468f,  0.4505937099f, -0.8086757660f));
+
+vec3 linear_srgb_to_oklab(vec3 c) {
+	vec3 cone = RGB_2_LMS * c;
+	vec3 nonlinearized = pow(cone, vec3(1. / 3.));
+    return CBRTLMS_2_OKLAB * nonlinearized;
+}
+
+vec3 oklab_to_linear_srgb(vec3 c) {
+	vec3 cbrts_lms = OKLAB_2_CBRTLMS * c;
+	vec3 nonlinearized = cbrts_lms * cbrts_lms * cbrts_lms;
+	return LMS_2_RGB * nonlinearized;
+}
+
+float oklab_distance_sq(vec3 srgb1, vec3 srgb2) {
+	vec3 delta = linear_srgb_to_oklab(srgb1) - linear_srgb_to_oklab(srgb2);
+	return
+		pow(delta.x, 2) +
+		pow(delta.y, 2) +
+		pow(delta.z, 2);
+}
+
+// HSV =====================
+
 vec4 rgb2hsv(vec4 rgb) { //Converts RGB values to HSV
 	float r = rgb.r;
 	float g = rgb.g;

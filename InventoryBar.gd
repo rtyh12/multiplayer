@@ -3,33 +3,22 @@ extends MarginContainer
 
 @export var ui_slot_scene: PackedScene
 @export var spawn_target: Control
-@export var slot_count: int = 4
+@export var slot_count: int
 
 var slots: Array[Control]
-var items: Array[Item]
-@export var item_ids: Array[String]:
-	set(new):
-		item_ids = new
-		items = []
-		for id in item_ids:
-			var item_resource = load(id)
-			items.append(item_resource)
 
 @onready var msgbus_inventory := $"/root/MsgbusInventory"
 
 var selected_slot: int = 0:
 	set(new):
 		slots[selected_slot].is_selected = false
-		selected_slot = new % slot_count
+		selected_slot = posmod(new, slot_count)
 		slots[selected_slot].is_selected = true
-		msgbus_inventory.emit_signal("on_select_inventory_slot", items[selected_slot])
+		msgbus_inventory.emit_signal("on_select_inventory_slot", selected_slot)
 
 func _ready():
-	for i in slot_count:
-		var slot = ui_slot_scene.instantiate()
-		spawn_target.add_child(slot)
-		slots.append(slot)
-		selected_slot = selected_slot  # refresh selected slot to trigger setter
+	msgbus_inventory.connect("on_inventory_changed", _on_inventory_changed)
+	print("connected to invbar")
 
 func _input(event):	
 	if event.is_action_pressed("inventory_scroll_right"):
@@ -43,4 +32,13 @@ func _input(event):
 			selected_slot -= 1
 
 		if event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
-			msgbus_inventory.emit_signal("on_click_item")
+			msgbus_inventory.emit_signal("on_click_item", selected_slot)
+
+func _on_inventory_changed(items: Array):
+	slot_count = len(items)
+
+	for i in len(items):
+		var slot = ui_slot_scene.instantiate()
+		spawn_target.add_child(slot)
+		slots.append(slot)
+		selected_slot = selected_slot  # refresh selected slot to trigger setter

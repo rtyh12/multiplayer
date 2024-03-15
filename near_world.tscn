@@ -13,9 +13,10 @@
 [ext_resource type="PackedScene" uid="uid://cjt55qmf26dof" path="res://ship_maybe.blend" id="11_86022"]
 
 [sub_resource type="Environment" id="Environment_j85ut"]
+ssao_enabled = true
 fog_density = 0.0367
 volumetric_fog_enabled = true
-volumetric_fog_density = 0.0143
+volumetric_fog_density = 0.0027
 
 [sub_resource type="Gradient" id="Gradient_ur0vy"]
 colors = PackedColorArray(0, 0.476245, 0.0193456, 1, 0.360494, 0.612721, 0.119744, 1)

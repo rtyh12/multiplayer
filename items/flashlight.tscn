@@ -4,13 +4,14 @@
 [ext_resource type="Script" path="res://items/Flashlight.gd" id="1_s8mwh"]
 [ext_resource type="Texture2D" uid="uid://c2newpntgxr0q" path="res://textures/light_01.png" id="2_lmwww"]
 
-[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_s6e4g"]
-properties/0/path = NodePath("flashlight/SpotLight3D:visible")
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_5745y"]
+properties/0/path = NodePath(".:flashlight_is_on")
 properties/0/spawn = true
 properties/0/replication_mode = 1
 
 [node name="Node3D" type="Node3D" node_paths=PackedStringArray("light")]
 script = ExtResource("1_s8mwh")
+flashlight_is_on = true
 light = NodePath("flashlight/SpotLight3D")
 
 [node name="flashlight" parent="." instance=ExtResource("1_6g7fu")]
@@ -25,5 +26,6 @@ spot_attenuation = 0.392292
 spot_angle = 34.52
 spot_angle_attenuation = 1.68179
 
-[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
-replication_config = SubResource("SceneReplicationConfig_s6e4g")
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="flashlight"]
+root_path = NodePath("../..")
+replication_config = SubResource("SceneReplicationConfig_5745y")

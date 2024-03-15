@@ -1,9 +1,10 @@
-[gd_scene load_steps=21 format=3 uid="uid://cc1m2a1obsyn4"]
+[gd_scene load_steps=23 format=3 uid="uid://cc1m2a1obsyn4"]
 
 [ext_resource type="Script" path="res://addons/fpc/character.gd" id="1_0t4e8"]
 [ext_resource type="PackedScene" uid="uid://3mij3cjhkwsm" path="res://addons/fpc/reticles/reticle_1.tscn" id="2_uuexm"]
 [ext_resource type="Script" path="res://addons/fpc/Hand.gd" id="2_xsh6a"]
 [ext_resource type="Script" path="res://addons/fpc/debug.gd" id="3_x1wcc"]
+[ext_resource type="Texture2D" uid="uid://ew3erwr2hcm0" path="res://textures/crosshair.png" id="4_theqj"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_kp17n"]
 albedo_color = Color(0.909804, 0.596078, 0, 1)
@@ -247,6 +248,11 @@ _data = {
 "land": SubResource("Animation_vsknp")
 }
 
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_x8n2q"]
+properties/0/path = NodePath(".:selected_slot")
+properties/0/spawn = true
+properties/0/replication_mode = 1
+
 [sub_resource type="Theme" id="Theme_wdf0f"]
 MarginContainer/constants/margin_bottom = 10
 MarginContainer/constants/margin_left = 10
@@ -314,9 +320,19 @@ libraries = {
 }
 speed_scale = 4.0
 
-[node name="hand" type="Node3D" parent="Head"]
+[node name="hand" type="Node3D" parent="Head" node_paths=PackedStringArray("spawn_target")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0855979, -0.110014, -0.166981)
 script = ExtResource("2_xsh6a")
+spawn_target = NodePath("SpawnTarget")
+
+[node name="SpawnTarget" type="Node3D" parent="Head/hand"]
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="Head/hand"]
+replication_config = SubResource("SceneReplicationConfig_x8n2q")
+
+[node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="Head/hand"]
+_spawnable_scenes = PackedStringArray("res://items/flashlight.tscn", "res://items/cone.tscn")
+spawn_path = NodePath("../SpawnTarget")
 
 [node name="UserInterface" type="Control" parent="."]
 layout_mode = 3
@@ -331,6 +347,27 @@ mouse_filter = 1
 layout_mode = 1
 reticle_lines = [NodePath("top"), NodePath("left"), NodePath("right"), NodePath("bottom")]
 character = NodePath("../..")
+
+[node name="TextureRect" type="TextureRect" parent="UserInterface/Reticle_1"]
+custom_minimum_size = Vector2(4, 4)
+layout_mode = 2
+texture = ExtResource("4_theqj")
+expand_mode = 1
+
+[node name="dot" parent="UserInterface/Reticle_1" index="1"]
+visible = false
+
+[node name="top" parent="UserInterface/Reticle_1" index="2"]
+visible = false
+
+[node name="left" parent="UserInterface/Reticle_1" index="3"]
+visible = false
+
+[node name="right" parent="UserInterface/Reticle_1" index="4"]
+visible = false
+
+[node name="bottom" parent="UserInterface/Reticle_1" index="5"]
+visible = false
 
 [node name="DebugPanel" type="PanelContainer" parent="UserInterface"]
 visible = false

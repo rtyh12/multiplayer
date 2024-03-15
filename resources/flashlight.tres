@@ -5,5 +5,4 @@
 
 [resource]
 script = ExtResource("1_scu2o")
-id = "flashlight"
 scene = ExtResource("1_t67ug")

@@ -1,7 +1,7 @@
 [gd_resource type="Resource" script_class="Item" load_steps=3 format=3 uid="uid://c32xcjvt14tix"]
 
 [ext_resource type="Script" path="res://Item.gd" id="1_j4inx"]
-[ext_resource type="PackedScene" uid="uid://40ts8ajjbrxp" path="res://models/cube.blend" id="1_jnkc6"]
+[ext_resource type="PackedScene" uid="uid://40ts8ajjbrxp" path="res://models/cone.blend" id="1_jnkc6"]
 
 [resource]
 script = ExtResource("1_j4inx")
