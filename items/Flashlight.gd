@@ -19,6 +19,4 @@ func click():
 	flashlight_is_on = !flashlight_is_on
 
 func _ready():
-	print("ready1")
 	flashlight_is_on = flashlight_is_on
-	print("ready2")

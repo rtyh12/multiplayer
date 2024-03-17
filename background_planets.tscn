@@ -26,6 +26,8 @@ shader_parameter/colormap = SubResource("GradientTexture1D_8m25v")
 material = SubResource("ShaderMaterial_qjgg5")
 radius = 0.4001
 height = 0.8002
+radial_segments = 199
+rings = 332
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_yutd2"]
 radius = 0.4001

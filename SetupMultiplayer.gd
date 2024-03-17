@@ -1,7 +1,7 @@
 extends Node
 
+
 @export var spawn_path: Node
-@export var world_root: Node
 @export var robot_scene: PackedScene
 
 @export var heartbeat_interval = 1
@@ -71,8 +71,8 @@ func start_heartbeat():
 	while true:
 		c_acknowledge_heartbeat.rpc()
 		await get_tree().create_timer(heartbeat_interval).timeout
-		print("s_clients = ", s_clients)
-		print("peers = ", multiplayer.get_peers())
+		# print("s_clients = ", s_clients)
+		# print("peers = ", multiplayer.get_peers())
 
 		for peer_id in s_clients.keys():
 			s_clients[peer_id]["time_since_heartbeat_response"] += heartbeat_interval

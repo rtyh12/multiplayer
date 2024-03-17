@@ -1,8 +1,10 @@
 extends Node3D
 
 
+@onready var items_path := get_node("../../../Items")
+
+@export var hand_target: Node3D
 @export var spawn_target: Node3D
-@export var syncDELETEME: MultiplayerSynchronizer
 @onready var msgbus_inventory := $"/root/MsgbusInventory"
 
 @export var selected_slot: int:
@@ -14,10 +16,13 @@ extends Node3D
 			item.visible = item.name.to_int() == selected_slot
 
 func _ready():
+	multiplayer.allow_object_decoding = true
+	
 	spawn_target.connect("child_entered_tree", _child_entered_tree)
 	
-	msgbus_inventory.connect("on_select_inventory_slot", _on_select_inventory_slot)
-	msgbus_inventory.connect("on_click_item", _on_click_item)
+	msgbus_inventory.on_select_inventory_slot.connect(_on_select_inventory_slot)
+	msgbus_inventory.on_click_item.connect(_on_click_item)
+	msgbus_inventory.on_throw_item.connect(_on_throw_item)
 
 	var flashlight = load("res://items/flashlight.tscn")
 	var almond = load("res://items/cone.tscn")
@@ -57,16 +62,27 @@ func _on_click_item(slot: int):
 	if !is_multiplayer_authority():
 		return
 
-	var item = spawn_target.get_node(str(slot))
+	var item = spawn_target.get_node_or_null(str(slot))
 	if item == null:
-		printerr("Attempted to click on null item, this should never happen. Rip")
 		return
 		
 	if item.has_method("click"):
 		item.click()
 
+func _on_throw_item(selected_slot: int):
+	if !is_multiplayer_authority():
+		return
+
+	var item = spawn_target.get_node_or_null(str(selected_slot))
+	if item == null:
+		return
+	
+	items_path.c_request_item_spawn.rpc(item, item.global_position)
+	item.queue_free()
+
 func _process(delta):
-	pass
+	global_rotation = hand_target.global_rotation
+	global_position = lerp(global_position, hand_target.global_position, 0.4)
 	# print("------------------")
 	# print(get_multiplayer_authority())
 	# print(spawn_target.get_children())

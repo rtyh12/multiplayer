@@ -9,7 +9,7 @@ extends CharacterBody3D
 
 @export var acceleration : float = 10.0
 @export var jump_velocity : float = 4.5
-@export var mouse_sensitivity : float = 0.1
+@export var mouse_sensitivity : float = 0.05
 
 @export var initial_facing_direction : Vector3 = Vector3.ZERO
 
@@ -102,7 +102,6 @@ func _ready():
 	# Reset the camera position
 	HEADBOB_ANIMATION.play("RESET")
 	JUMP_ANIMATION.play("RESET")
-
 
 func _physics_process(delta):
 	if not is_multiplayer_authority():
@@ -301,5 +300,5 @@ func _unhandled_input(event):
 		return
 
 	if event is InputEventMouseMotion and Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
-		HEAD.rotation_degrees.y -= event.relative.x * mouse_sensitivity
-		HEAD.rotation_degrees.x -= event.relative.y * mouse_sensitivity
+		HEAD.rotation_degrees.y -= event.relative.x * mouse_sensitivity * $"/root/Settings".scale
+		HEAD.rotation_degrees.x -= event.relative.y * mouse_sensitivity * $"/root/Settings".scale
