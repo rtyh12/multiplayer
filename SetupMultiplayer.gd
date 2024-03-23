@@ -29,9 +29,13 @@ func _ready() -> void:
 	peer.peer_disconnected.connect(peer_disconnected)
 
 
+func get_player_node_from_unique_id(id: int):
+	return spawn_path.get_node("player_" + str(id))
+
+
 func peer_connected(id: int):
 	if is_server:
-		print("penis ", id)
+		print("Peer ", id, " connected.")
 		s_clients[id] = { "time_since_heartbeat_response": 0 }
 		return
 
@@ -41,9 +45,13 @@ func peer_connected(id: int):
 func peer_disconnected(id: int):
 	s_clients.erase(id)
 	var player_path = "player_" + str(id)
-	var player = spawn_path.get_node(player_path)
-	if player != null:
-		player.queue_free()
+	var player = spawn_path.get_node_or_null(player_path)
+
+	if player == null:
+		print("Peer ", str(id), " disconnected, but no corresponding character exists.")
+		return
+
+	player.queue_free()
 
 
 @rpc("any_peer")
@@ -71,8 +79,6 @@ func start_heartbeat():
 	while true:
 		c_acknowledge_heartbeat.rpc()
 		await get_tree().create_timer(heartbeat_interval).timeout
-		# print("s_clients = ", s_clients)
-		# print("peers = ", multiplayer.get_peers())
 
 		for peer_id in s_clients.keys():
 			s_clients[peer_id]["time_since_heartbeat_response"] += heartbeat_interval

@@ -1,7 +1,18 @@
-[gd_scene load_steps=2 format=3 uid="uid://cyv6qa8tspfna"]
+[gd_scene load_steps=3 format=3 uid="uid://cyv6qa8tspfna"]
 
 [ext_resource type="PackedScene" uid="uid://40ts8ajjbrxp" path="res://models/cone.blend" id="2_g1i11"]
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_by3ib"]
+properties/0/path = NodePath(".:position")
+properties/0/spawn = true
+properties/0/replication_mode = 1
+properties/1/path = NodePath(".:rotation")
+properties/1/spawn = true
+properties/1/replication_mode = 1
 
 [node name="Node3D" type="Node3D"]
 
 [node name="cone" parent="." instance=ExtResource("2_g1i11")]
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_by3ib")

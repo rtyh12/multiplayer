@@ -3,7 +3,7 @@ extends MarginContainer
 
 @export var ui_slot_scene: PackedScene
 @export var spawn_target: Control
-@export var slot_count: int = 4
+@export var slot_count := 0
 
 var slots: Array[Control]
 
@@ -11,10 +11,19 @@ var slots: Array[Control]
 
 var selected_slot: int = 0:
 	set(new):
+		# We probably didn't get the _on_inventory_changed signal yet, or slot
+		# was changed during _on_inventory_changed callback
+		if len(slots) == 0: #\
+		# Prevents a crash when selected slot changes via mp sync immediately
+		# after _on_inventory_changed was emitted; _on_inventory_changed frees
+		# all UI inventory slots
+		# or !is_instance_valid(slots[selected_slot]):
+			return
 		slots[selected_slot].is_selected = false
 		selected_slot = posmod(new, slot_count)
 		slots[selected_slot].is_selected = true
-		msgbus_inventory.emit_signal("on_select_inventory_slot", selected_slot)
+		print("set selected_slot")
+		msgbus_inventory.c_request_slot_select.rpc(selected_slot)
 
 func _ready():
 	msgbus_inventory.connect("on_inventory_changed", _on_inventory_changed)
@@ -36,6 +45,12 @@ func _input(event):
 			msgbus_inventory.emit_signal("on_click_item", selected_slot)
 
 func _on_inventory_changed(items: Array):
+	for slot in spawn_target.get_children():
+		slot.free()
+
+	slot_count = len(items)
+	
+	slots = []
 	for i in len(items):
 		var slot = ui_slot_scene.instantiate()
 		spawn_target.add_child(slot)

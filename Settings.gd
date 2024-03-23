@@ -16,11 +16,3 @@ func _on_size_changed():
     var res = get_tree().root.size
     print(res.x / 1000)
     scale = int(res.x / 1000) + 1
-    # if res.x < 1200:
-    #     scale = 1
-    # elif res.x < 2000:
-    #     scale = 2
-    # elif res.x < 3000:
-    #     scale = 3
-    # else:
-    #     scale = 4

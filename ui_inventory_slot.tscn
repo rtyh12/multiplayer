@@ -1,15 +1,7 @@
-[gd_scene load_steps=7 format=3 uid="uid://bf1nw4i8jq7kp"]
+[gd_scene load_steps=5 format=3 uid="uid://bf1nw4i8jq7kp"]
 
 [ext_resource type="Script" path="res://ui_inventory_slot.gd" id="1_rbhge"]
 [ext_resource type="Texture2D" uid="uid://q7fygxoaljav" path="res://icon.svg" id="2_keq0v"]
-
-[sub_resource type="Animation" id="Animation_d4vgv"]
-resource_name = "slot_select"
-
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_kofs1"]
-_data = {
-"slot_select": SubResource("Animation_d4vgv")
-}
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ruq4v"]
 bg_color = Color(0, 0, 0, 0)
@@ -43,11 +35,6 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_rbhge")
 border = NodePath("Panel2")
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-libraries = {
-"": SubResource("AnimationLibrary_kofs1")
-}
 
 [node name="Panel2" type="Panel" parent="."]
 visible = false

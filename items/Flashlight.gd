@@ -12,6 +12,7 @@ extends Node3D
 @export var light: Light3D
 
 func click():
+	print("click")
 	# TODO maybe refactor so if !authority it never gets the click signal in the first place?
 	if !is_multiplayer_authority():
 		return

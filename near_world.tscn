@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=3 uid="uid://dc1g5116c7psp"]
+[gd_scene load_steps=27 format=3 uid="uid://dc1g5116c7psp"]
 
 [ext_resource type="Script" path="res://ConnectWorlds.gd" id="1_5ycu2"]
 [ext_resource type="PackedScene" uid="uid://cc1m2a1obsyn4" path="res://addons/fpc/character.tscn" id="1_e18vq"]
@@ -14,12 +14,18 @@
 [ext_resource type="PackedScene" uid="uid://54d6vevp406x" path="res://material_testing.blend" id="13_a36ah"]
 [ext_resource type="PackedScene" uid="uid://dmws2h8htkbda" path="res://light_pole.blend" id="13_fd2ml"]
 [ext_resource type="Script" path="res://Items.gd" id="14_hobiv"]
+[ext_resource type="PackedScene" uid="uid://ww73qm7fysmo" path="res://WalkieTalkie.blend" id="15_g2k1q"]
 
 [sub_resource type="Environment" id="Environment_j85ut"]
+tonemap_mode = 2
 ssao_enabled = true
+glow_intensity = 4.27
+glow_strength = 0.52
+glow_bloom = 0.19
+glow_blend_mode = 3
 fog_density = 0.0367
 volumetric_fog_enabled = true
-volumetric_fog_density = 0.001
+volumetric_fog_density = 0.0056
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_83wi1"]
 properties/0/path = NodePath(".:solar_system_position")
@@ -96,7 +102,7 @@ environment = SubResource("Environment_j85ut")
 replication_config = SubResource("SceneReplicationConfig_83wi1")
 
 [node name="sun" type="DirectionalLight3D" parent="."]
-transform = Transform3D(0.472143, 0.440639, 0.763491, -0.63058, -0.436401, 0.641813, 0.615996, -0.784469, 0.0718144, 0.320881, 0.116536, 0)
+transform = Transform3D(0.472143, 0.440639, 0.763491, -0.63058, -0.436401, 0.641813, 0.615996, -0.784469, 0.0718144, 31.2652, 21.1295, 0)
 shadow_enabled = true
 shadow_bias = 0.077
 
@@ -233,7 +239,7 @@ spot_angle = 33.2
 transform = Transform3D(-4.38665e-07, -1.75466e-07, 2.0071, 1.70008e-21, -2.0071, -1.75466e-07, 2.0071, -3.83493e-14, 4.38665e-07, 10.3981, 29.873, -29.8727)
 
 [node name="SpotLight3D2" type="SpotLight3D" parent="big_room/light_pole2"]
-transform = Transform3D(-0.498232, 8.71136e-08, 1.69407e-21, 1.14236e-14, 6.53352e-08, -0.498232, -8.71136e-08, -0.498232, -6.53352e-08, 1.55938, 5.50964, 1.43051e-06)
+transform = Transform3D(-1, 1.50996e-07, -6.60024e-15, 0, -4.37114e-08, -1, -1.50996e-07, -1, 4.37114e-08, 1.55938, 5.50964, 1.43051e-06)
 light_energy = 32.0
 spot_range = 28.125
 spot_angle = 33.2
@@ -259,5 +265,17 @@ spawn_path = NodePath("..")
 [node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="Players"]
 _spawnable_scenes = PackedStringArray("res://addons/fpc/character.tscn")
 spawn_path = NodePath("..")
+
+[node name="Node3D2" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.04689, -3.19531, 4.07526)
+
+[node name="WalkieTalkie" parent="Node3D2" instance=ExtResource("15_g2k1q")]
+transform = Transform3D(0.0227658, -0.0932616, 9.95123e-10, 4.19629e-09, 1.83426e-16, -0.096, 0.0932616, 0.0227658, 4.07659e-09, 19.8796, 9.37334, 11.1248)
+
+[node name="WalkieTalkie2" parent="Node3D2" instance=ExtResource("15_g2k1q")]
+transform = Transform3D(0.0746313, -0.0603835, 3.26224e-09, 4.19629e-09, 1.83426e-16, -0.096, 0.0603835, 0.0746313, 2.63945e-09, 20.417, 9.37334, 11.0436)
+
+[node name="WalkieTalkie3" parent="Node3D2" instance=ExtResource("15_g2k1q")]
+transform = Transform3D(0.0842382, 0.0460426, 5.85433e-09, -9.99035e-09, 6.07161e-09, 0.096, 0.0460426, -0.0842382, 1.01192e-08, 19.4527, 9.37334, 10.9086)
 
 [connection signal="spawned" from="Items/MultiplayerSpawner" to="Items" method="test_deleteme"]

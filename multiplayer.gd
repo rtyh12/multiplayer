@@ -32,4 +32,4 @@ func change_color_response(new_black: bool):
 
 
 func peer_connected(id: int):
-	print("penis ", id)
+	print("peer_connected: ", id)

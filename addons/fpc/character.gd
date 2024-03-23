@@ -2,6 +2,8 @@ extends CharacterBody3D
 
 # TODO: Add descriptions for each value
 
+@export var inventory_container_path: Node
+
 @export_category("Character")
 @export var base_speed : float = 3.0
 @export var sprint_speed : float = 6.0
@@ -86,6 +88,14 @@ var was_on_floor : bool = true
 
 # Get the gravity from the project settings to be synced with RigidBody nodes
 var gravity : float = ProjectSettings.get_setting("physics/3d/default_gravity") # Don't set this as a const, see the gravity section in _physics_process
+
+
+func get_peer_id() -> int:
+	return get_multiplayer_authority()
+
+
+func is_current_player() -> bool:
+	return multiplayer.get_unique_id() == get_peer_id()
 
 
 func _enter_tree():

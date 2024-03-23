@@ -118,6 +118,9 @@ _data = {
 properties/0/path = NodePath(".:selected_slot")
 properties/0/spawn = true
 properties/0/replication_mode = 1
+properties/1/path = NodePath(".:inventory_items")
+properties/1/spawn = true
+properties/1/replication_mode = 1
 
 [sub_resource type="Animation" id="Animation_gh776"]
 resource_name = "RESET"
@@ -275,9 +278,10 @@ properties/3/path = NodePath(".:state")
 properties/3/spawn = true
 properties/3/replication_mode = 1
 
-[node name="Character" type="CharacterBody3D" node_paths=PackedStringArray("HEAD", "CAMERA", "HEADBOB_ANIMATION", "JUMP_ANIMATION", "CROUCH_ANIMATION", "COLLISION_MESH")]
+[node name="Character" type="CharacterBody3D" node_paths=PackedStringArray("inventory_container_path", "HEAD", "CAMERA", "HEADBOB_ANIMATION", "JUMP_ANIMATION", "CROUCH_ANIMATION", "COLLISION_MESH")]
 collision_layer = 2
 script = ExtResource("1_0t4e8")
+inventory_container_path = NodePath("hand")
 HEAD = NodePath("Head")
 CAMERA = NodePath("Head/Camera")
 HEADBOB_ANIMATION = NodePath("Head/HeadbobAnimation")
@@ -301,20 +305,14 @@ libraries = {
 "": SubResource("AnimationLibrary_5e5t5")
 }
 
-[node name="hand" type="Node3D" parent="." node_paths=PackedStringArray("hand_target", "spawn_target")]
+[node name="hand" type="Node3D" parent="." node_paths=PackedStringArray("hand_target", "player_root")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0855979, 1.38999, -0.166981)
 script = ExtResource("2_xsh6a")
 hand_target = NodePath("../Head/HandTarget")
-spawn_target = NodePath("SpawnTarget")
-
-[node name="SpawnTarget" type="Node3D" parent="hand"]
+player_root = NodePath("..")
 
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="hand"]
 replication_config = SubResource("SceneReplicationConfig_x8n2q")
-
-[node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="hand"]
-_spawnable_scenes = PackedStringArray("res://items/flashlight.tscn", "res://items/cone.tscn")
-spawn_path = NodePath("../SpawnTarget")
 
 [node name="Head" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)

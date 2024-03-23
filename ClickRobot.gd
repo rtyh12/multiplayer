@@ -21,6 +21,3 @@ func _physics_process(delta):
 	
 	var vec = Input.get_vector("move_left", "move_right", "move_up", "move_down")
 	position += vec * speed * delta
-
-	# if OS.get_cmdline_args().has("server"):
-	# 	print(position)

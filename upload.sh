@@ -1,3 +1,4 @@
+rm -rf ./bin/linux-server/*
 /mnt/c/apps/godot/Godot_v4.2.1-stable_win64_console.exe --export-release "Server" --headless --verbose
 /mnt/c/apps/godot/Godot_v4.2.1-stable_win64_console.exe --export-release "Server" --headless --verbose
 ssh root@fairydust.cc -t "tmux kill-session -t server"
