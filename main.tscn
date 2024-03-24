@@ -18,13 +18,13 @@ blend_mode = 1
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_hpuav"]
 shader = ExtResource("10_a34he")
-shader_parameter/alpha = 0.05
+shader_parameter/alpha = 0.02
 shader_parameter/scale = 1
 shader_parameter/ditherTexture = ExtResource("7_emoy0")
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_8phhi"]
 shader = ExtResource("12_gxm6c")
-shader_parameter/colors = 20
+shader_parameter/colors = 24
 shader_parameter/palette = ExtResource("11_y0paw")
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_e5d17"]

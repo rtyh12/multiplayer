@@ -12,7 +12,7 @@ func _process(_delta):
 	if camera:
 		solar_system.camera.global_rotation = camera.global_rotation
 		solar_system.camera.fov = camera.fov
-	local_sun.visible = solar_system.light_is_on
+	local_sun.light_energy = solar_system.sun_intensity
 
 func _physics_process(_delta):
 	if OS.get_cmdline_args().has("server"):
