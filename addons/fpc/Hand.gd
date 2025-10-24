@@ -12,7 +12,6 @@ extends Node3D
 @export var selected_slot: int:
 	set(new):
 		selected_slot = new
-		# print(selected_slot, " sel - new ", new)
 		for i in len(inventory_items):
 			if inventory_items[i] == null or inventory_items[i].is_empty(): return
 			var item = get_node(inventory_items[i])
@@ -26,7 +25,7 @@ func _ready():
 	if player_root.is_current_player():
 		msgbus_inventory.on_select_inventory_slot.connect(_on_select_inventory_slot)
 		msgbus_inventory.on_click_item.connect(_on_click_item)
-		msgbus_inventory.on_throw_item.connect(_on_throw_item)
+		# msgbus_inventory.on_throw_item.connect(_on_throw_item)
 	
 	if !is_multiplayer_authority():
 		return
@@ -54,7 +53,11 @@ func _on_select_inventory_slot(slot: int):
 
 func _on_click_item(slot: int):
 	var item_path = inventory_items[slot]
-	if item_path == null or item_path.is_empty(): return
+	
+	if item_path == null \
+	or item_path.is_empty():
+		return
+
 	var item = get_node(item_path)
 	
 	if !item.is_multiplayer_authority() \
@@ -64,11 +67,14 @@ func _on_click_item(slot: int):
 	item.click()
 
 func _on_throw_item(selected_slot: int):
-	if !is_multiplayer_authority():
+	print(get_multiplayer_authority())
+	var item_path = inventory_items[selected_slot]
+
+	if !is_multiplayer_authority() \
+	or item_path == null \
+	or item_path.is_empty():
 		return
 
-	var item_path = inventory_items[selected_slot]
-	if item_path == null or item_path.is_empty(): return
 	var item = get_node(item_path)
 	
 	print("would delete ", item)

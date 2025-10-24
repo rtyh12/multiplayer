@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=3 uid="uid://dc1g5116c7psp"]
+[gd_scene load_steps=30 format=3 uid="uid://dc1g5116c7psp"]
 
 [ext_resource type="Script" path="res://ConnectWorlds.gd" id="1_5ycu2"]
 [ext_resource type="PackedScene" uid="uid://cc1m2a1obsyn4" path="res://addons/fpc/character.tscn" id="1_e18vq"]
@@ -15,6 +15,9 @@
 [ext_resource type="PackedScene" uid="uid://dmws2h8htkbda" path="res://light_pole.blend" id="13_fd2ml"]
 [ext_resource type="Script" path="res://Items.gd" id="14_hobiv"]
 [ext_resource type="PackedScene" uid="uid://ww73qm7fysmo" path="res://WalkieTalkie.blend" id="15_g2k1q"]
+[ext_resource type="PackedScene" uid="uid://c663qkdrost10" path="res://Mouthhhhhhhh.blend" id="16_n3p57"]
+[ext_resource type="PackedScene" uid="uid://cjxgeuohvoy3k" path="res://Sniffy Guy.blend" id="17_3jgd2"]
+[ext_resource type="PackedScene" uid="uid://bfp01s03esg5b" path="res://Tentacle guy.blend" id="18_140mt"]
 
 [sub_resource type="Environment" id="Environment_j85ut"]
 tonemap_mode = 2
@@ -277,5 +280,14 @@ transform = Transform3D(0.0746313, -0.0603835, 3.26224e-09, 4.19629e-09, 1.83426
 
 [node name="WalkieTalkie3" parent="Node3D2" instance=ExtResource("15_g2k1q")]
 transform = Transform3D(0.0842382, 0.0460426, 5.85433e-09, -9.99035e-09, 6.07161e-09, 0.096, 0.0460426, -0.0842382, 1.01192e-08, 19.4527, 9.37334, 10.9086)
+
+[node name="Mouthhhhhhhh" parent="." instance=ExtResource("16_n3p57")]
+transform = Transform3D(-2.46944e-08, 0, 0.564942, 0, 0.564942, 0, -0.564942, 0, -2.46944e-08, -44.4382, 4.05629, 15.024)
+
+[node name="Sniffy Guy" parent="." instance=ExtResource("17_3jgd2")]
+transform = Transform3D(-0.126733, 0, -0.055129, 0, 0.138205, 0, 0.055129, 0, -0.126733, 4.95025, 0.154933, 13.234)
+
+[node name="Tentacle guy" parent="." instance=ExtResource("18_140mt")]
+transform = Transform3D(0.427815, 0, 0.903866, 0, 1, 0, -0.903866, 0, 0.427815, 2.53754, 0, 9.92568)
 
 [connection signal="spawned" from="Items/MultiplayerSpawner" to="Items" method="test_deleteme"]

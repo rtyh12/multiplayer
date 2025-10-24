@@ -15,4 +15,4 @@ func _ready():
 func _on_size_changed():
     var res = get_tree().root.size
     print(res.x / 1000)
-    scale = int(res.x / 1000) + 1
+    scale = int(res.x / 1000) + 2
